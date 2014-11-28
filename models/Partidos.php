@@ -12,6 +12,8 @@ use Yii;
  * @property string $hora
  * @property string $costo
  * @property integer $estado
+ * @property integer $blancos
+ * @property integer $negros
  * @property integer $id_cancha
  *
  * @property Canchas $idCancha
@@ -33,10 +35,10 @@ class Partidos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fecha', 'hora', 'costo', 'id_cancha'], 'required'],
+            [['fecha', 'hora', 'costo'], 'required'],
             [['fecha', 'hora'], 'safe'],
             [['costo'], 'number'],
-            [['estado', 'id_cancha'], 'integer']
+            [['estado', 'blancos', 'negros', 'id_cancha'], 'integer']
         ];
     }
 
@@ -51,6 +53,8 @@ class Partidos extends \yii\db\ActiveRecord
             'hora' => 'Hora',
             'costo' => 'Costo',
             'estado' => 'Estado',
+            'blancos' => 'Blancos',
+            'negros' => 'Negros',
             'id_cancha' => 'Id Cancha',
         ];
     }

@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Partidos */
 
-$this->title = 'Update Partidos: ' . ' ' . $model->id_partido;
+$this->title = 'Actualizar Partidos: ' . ' ' . $model->id_partido;
 $this->params['breadcrumbs'][] = ['label' => 'Partidos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_partido, 'url' => ['view', 'id' => $model->id_partido]];
 $this->params['breadcrumbs'][] = 'Update';
@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'canchas' => $canchas,
     ]) ?>
 
 </div>

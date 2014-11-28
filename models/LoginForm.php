@@ -44,7 +44,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Nombre de usuario y/o contraseña inválidos.');
             }
         }
     }
@@ -70,7 +70,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = Usuarios::findByUsername($this->username);
         }
 
         return $this->_user;

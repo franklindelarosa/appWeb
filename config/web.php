@@ -5,8 +5,13 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
+    'timeZone' => 'America/Bogota',
     'bootstrap' => ['log'],
     'components' => [
+         'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'KpEbPjCmgSHq2gjAFcAfx90QweM-FW9T',

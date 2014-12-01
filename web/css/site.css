@@ -3,6 +3,14 @@ body {
     height: 100%;
 }
 
+
+a, tr{
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
 .wrap {
     min-height: 100%;
     height: auto;

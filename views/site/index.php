@@ -13,7 +13,7 @@ $this->title = 'Futbol Cracks';
                 <p class="text-center"><a class="btn" href="partidos/index"><img class="img-responsive" src="<?= Yii::$app->request->baseUrl.'/images/ball.png' ?>" alt="Partido"></a></p>
             </div>
             <div class="col-lg-4">
-                <p class="text-center"><a class="btn" href="site/consulta"><img class="img-responsive" src="<?= Yii::$app->request->baseUrl.'/images/statistics.png' ?>" alt="Consulta"></a></p>
+                <p class="text-center"><a class="btn" href="consulta/index"><img class="img-responsive" src="<?= Yii::$app->request->baseUrl.'/images/statistics.png' ?>" alt="Consulta"></a></p>
             </div>
         </div>
     </div>

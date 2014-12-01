@@ -12,6 +12,7 @@ use Yii;
  * @property string $usuario
  * @property string $contrasena
  * @property string $sexo
+ * @property string $perfil
  * @property string $telefono
  * @property string $correo
  *
@@ -37,7 +38,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     {
         return [
             [['nombre', 'usuario', 'contrasena', 'sexo'], 'required'],
-            [['nombre', 'usuario', 'correo'], 'string', 'max' => 45],
+            [['nombre', 'usuario', 'perfil', 'correo'], 'string', 'max' => 45],
             [['contrasena'], 'string', 'max' => 70],
             [['sexo'], 'string', 'max' => 1],
             [['telefono'], 'string', 'max' => 20]
@@ -53,11 +54,28 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             'id_usuario' => 'Id Usuario',
             'nombre' => 'Nombre',
             'usuario' => 'Usuario',
-            'contrasena' => 'Contraseña',
+            'contrasena' => 'Contrasena',
             'sexo' => 'Sexo',
+            'perfil' => 'Perfil',
             'telefono' => 'Telefono',
             'correo' => 'Correo',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInvitaciones()
+    {
+        return $this->hasMany(Invitaciones::className(), ['id_usuario' => 'id_usuario']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsuariosPartidos()
+    {
+        return $this->hasMany(UsuariosPartidos::className(), ['id_usuario' => 'id_usuario']);
     }
 
     public function getId()
@@ -110,21 +128,5 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             return new static($usuario);
         }
         return null;
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getInvitaciones()
-    {
-        return $this->hasMany(Invitaciones::className(), ['id_usuario' => 'id_usuario']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsuariosPartidos()
-    {
-        return $this->hasMany(UsuariosPartidos::className(), ['id_usuario' => 'id_usuario']);
     }
 }

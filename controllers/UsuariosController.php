@@ -8,6 +8,8 @@ use app\models\UsuariosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Query;
+use yii\filters\AccessControl;
 
 /**
  * UsuariosController implements the CRUD actions for Usuarios model.
@@ -61,12 +63,23 @@ class UsuariosController extends Controller
     public function actionCreate()
     {
         $model = new Usuarios();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_usuario]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->contrasena = sha1($model->contrasena);
+            if($model->save()){
+                if($model->perfil == ''){
+                    $role = Yii::$app->authManager->getRole('Jugador');
+                }else{
+                    $role = Yii::$app->authManager->getRole($model->perfil);
+                }
+                Yii::$app->authManager->assign($role, $model->id_usuario);
+                return $this->redirect(['view', 'id' => $model->id_usuario]);
+            }
         } else {
+            $query = new Query;
+            $roles = $query->select('name')->from('items')->all();
             return $this->render('create', [
                 'model' => $model,
+                'roles' => $roles,
             ]);
         }
     }
@@ -82,15 +95,26 @@ class UsuariosController extends Controller
         $model = $this->findModel($id);
         $contrasena = $model->contrasena;
 
-        if ($model->load(Yii::$app->request->post())) {
-            ($model->contrasena === '') ? $model->contrasena = $contrasena : $model->contrasena = sha1($model->contrasena);
-
-            if($model->save())
-                 return $this->redirect(['view', 'id' => $model->id_usuario]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if(Yii::$app->user->id===$model->id || Yii::$app->user->can('Administrador')){
+            if ($model->load(Yii::$app->request->post())) {
+                ($model->contrasena === '') ? $model->contrasena = $contrasena : $model->contrasena = sha1($model->contrasena);
+                $role = Yii::$app->authManager->getRole($model->perfil);
+                if($model->perfil !== ''){
+                    Yii::$app->authManager->revokeAll($id);
+                    Yii::$app->authManager->assign($role, $id);
+                }
+                if($model->save())
+                     return $this->redirect(['view', 'id' => $model->id_usuario]);
+            } else {
+                $query = new Query;
+                $roles = $query->select('name')->from('items')->all();
+                return $this->render('update', [
+                    'model' => $model,
+                    'roles' => $roles,
+                ]);
+            }
+        }else{
+            throw new \yii\web\HttpException(403, 'No tiene permisos para ejecutar esta acción');
         }
     }
 

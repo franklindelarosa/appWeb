@@ -1,3 +1,9 @@
+<script>
+    $(document).ready(function() {
+        $('#sexo').val("<?= $model['sexo'];?>");
+        $('#perfil').val("<?= $model['perfil'] ?>");
+    });
+</script>
 <?php
 
 use yii\helpers\Html;
@@ -55,9 +61,26 @@ use yii\widgets\ActiveForm;
                 <div class="form-group col-md-12">
                     <label for="nombre" class="col-md-2 control-label">Sexo:</label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control" value="<?= $model['sexo'];?>" name="Usuarios[sexo]" placeholder="Sexo">
+                        <select id="sexo" name="Usuarios[sexo]" class="form-control">
+                            <option value="">Selecciona el sexo</option>
+                            <option value="m">Masculino</option>
+                            <option value="f">Femenino</option>
+                        </select>
                     </div>
                 </div>
+                <?php if(Yii::$app->user->can('Administrador')){?>
+                <div class="form-group col-md-12">
+                    <label for="nombre" class="col-md-2 control-label">Perfil:</label>
+                    <div class="col-md-10">
+                        <select id="perfil" name="Usuarios[perfil]" class="form-control">
+                            <option value="">Selecciona un perfil</option>
+                            <?php foreach($roles as $row){?>
+                                <option value="<?= $row['name'];?>"><?= $row['name'];?></option>
+                            <?php }?>
+                        </select>
+                    </div>
+                </div>
+                <?php } ?>
 
                 <div class="form-group col-md-12">
                     <label for="nombre" class="col-md-2 control-label">Telefono:</label>

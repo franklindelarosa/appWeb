@@ -11,6 +11,14 @@ a, tr{
     -ms-user-select: none;
 }
 
+#cuerpoModal{
+    display: flex;
+}
+
+.tablaModal{
+    width: 50%;
+}
+
 .wrap {
     min-height: 100%;
     height: auto;

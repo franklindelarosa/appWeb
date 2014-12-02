@@ -17,7 +17,8 @@
             if(data!=null){
                 $.post('usuario', {id: data}).done(function(data) {
                     $('#usuarioModal').modal({backdrop:'static'});
-                    console.log(data);
+                    generarTablaUsuario(data,'infoUsuario');
+                    // console.log(data);
                 });
             }else{alert('Seleccione un usuario válido')}
         });
@@ -33,6 +34,14 @@
         for (var i = 0; i < n; i++) {
             $('#'+tabla).append('<tr><td class="text-center">&nbsp</td></tr>');
         };
+    }
+
+    function generarTablaUsuario(data,tabla){
+        $('#'+tabla).empty();
+        $('#'+tabla).append('<tr><th> Datos de usuario </th></tr>');
+        $('#'+tabla).append('<tr><td class="text-center"> Nombre:  '+data['nombre']+'</td></tr>');
+        $('#'+tabla).append('<tr><td class="text-center"> Usuario:  '+data['usuario']+'</td></tr>');
+        $('#'+tabla).append('<tr><td class="text-center"> Sexo:  '+data['sexo']+'</td></tr>');
     }
 </script>
 
@@ -106,10 +115,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">Usuario</h4>
             </div>
-            <div id="cuerpoModal" class="modal-body">
-                <table id="equipoBlanco" class="tablaModal table table-striped table-bordered table-hover">
-                </table>
-                 <table id="equipoNegro" class="tablaModal table table-striped table-bordered table-hover">
+            <div class="modal-body">
+                <table id="infoUsuario" class="table table-striped table-bordered table-hover">
                 </table>
             </div>
             <div class="modal-footer">

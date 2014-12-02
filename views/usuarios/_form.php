@@ -24,18 +24,6 @@ use yii\widgets\ActiveForm;
             <div class="usuarios-form">
 
                 <?php $form = ActiveForm::begin(); ?>
-<!-- 
-                <?= $form->field($model, 'nombre')->textInput(['maxlength' => 45]) ?>
-
-                <?= $form->field($model, 'usuario')->textInput(['maxlength' => 45]) ?>
-
-                <?= $form->field($model, 'contrasena')->textInput(['maxlength' => 70]) ?>
-
-                <?= $form->field($model, 'sexo')->textInput(['maxlength' => 1]) ?>
-
-                <?= $form->field($model, 'telefono')->textInput(['maxlength' => 20]) ?>
-
-                <?= $form->field($model, 'correo')->textInput(['maxlength' => 45]) ?> -->
 
                 <div class="form-group col-md-12">
                     <label for="nombre" class="col-md-2 control-label">Nombre:</label>

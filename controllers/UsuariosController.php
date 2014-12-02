@@ -65,12 +65,11 @@ class UsuariosController extends Controller
         $model = new Usuarios();
         if ($model->load(Yii::$app->request->post())) {
             $model->contrasena = sha1($model->contrasena);
+            if($model->perfil === '' || $model->perfil === NULL){
+                $model->perfil = 'Jugador';
+            }
             if($model->save()){
-                if($model->perfil == ''){
-                    $role = Yii::$app->authManager->getRole('Jugador');
-                }else{
-                    $role = Yii::$app->authManager->getRole($model->perfil);
-                }
+                $role = Yii::$app->authManager->getRole($model->perfil);
                 Yii::$app->authManager->assign($role, $model->id_usuario);
                 return $this->redirect(['view', 'id' => $model->id_usuario]);
             }

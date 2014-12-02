@@ -39,6 +39,8 @@ AppAsset::register($this);
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
                     ['label' => 'Mi perfil', 'url' => ['/usuarios/update?id='.Yii::$app->user->id]],
+                    Yii::$app->user->isGuest ?
+                    ['label' => ''] :
                     ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
                     // ['label' => 'Contact', 'url' => ['/site/contact']],
                     Yii::$app->user->isGuest ?

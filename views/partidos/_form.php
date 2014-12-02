@@ -2,6 +2,7 @@
     $(document).ready(function() {
         $('#partidos-estado').val('<?= $model->estado; ?>');
         $('#partidos-id_cancha').val('<?= $model->id_cancha; ?>');
+        $('#partidos-fecha').val('<?= $model->fecha; ?>');
     });
 </script>
 <?php
@@ -13,6 +14,8 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Partidos */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+
+
 
 <div class="partidos-form">
     <div class="col-sm-8 col-sm-offset-2">
@@ -26,7 +29,8 @@ use yii\widgets\ActiveForm;
             <div class="form-group col-md-12 field-partidos-fecha required">
                 <label class="col-md-3 control-label">Fecha del partido:</label>
                 <div class="col-md-8">
-                    <input value="<?= $model->fecha; ?>" placeholder="aaaa-mm-dd" type="date" id="partidos-fecha" class="form-control" name="Partidos[fecha]">
+                    <?= yii\jui\DatePicker::widget(["id" => "partidos-fecha", "name" => "Partidos[fecha]", "dateFormat" => "yyyy-MM-dd", 'options' => ['class' => 'form-control', "placeholder" => "aaaa-mm-dd"]])  ?>
+                    <!-- <input value="<?= $model->fecha; ?>" placeholder="aaaa-mm-dd" type="date" id="partidos-fecha" class="form-control" name="Partidos[fecha]"> -->
                 </div>
             </div>
 
@@ -69,11 +73,8 @@ use yii\widgets\ActiveForm;
             </div>
 
             <div class= "col-md-12">
-                <div class="form-group col-md-6 text-center">
+                <div class="form-group col-md-12 text-center">
                     <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['ng-disabled'=>'formulario.$invalid', 'class' => 'btn btn-success']) ?>
-                </div>
-                <div class="form-group col-md-6 text-center">
-                    <a href="<?= Yii::$app->request->baseUrl; ?>/partidos/index" class="btn btn-primary">Volver</a>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>

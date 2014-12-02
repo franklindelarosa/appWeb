@@ -32,7 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'cupo_max',
 
             ['class' => 'yii\grid\ActionColumn'],
+
         ],
+        
     ]); ?>
 
 </div>

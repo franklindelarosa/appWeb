@@ -16,18 +16,11 @@ use yii\widgets\ActiveForm;
             <div class="panel-body">
 
 				<div class="canchas-form">
+				    <?php $form = ActiveForm::begin(['options' => ['enctype'=>'multipart/form-data']]); ?>
 
-				    <?php $form = ActiveForm::begin(); ?>
+				    
 
-				    <!-- <?= $form->field($model, 'nombre')->textInput(['maxlength' => 45]) ?> -->
-
-				    <!-- <?= $form->field($model, 'direccion')->textInput(['maxlength' => 45]) ?> -->
-
-				    <!-- <?= $form->field($model, 'telefono')->textInput(['maxlength' => 45]) ?> -->
-
-				    <!-- <?= $form->field($model, 'cupo_max')->textInput() ?> -->
-
-				    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12">
                         <label for="nombre" class="col-md-2 control-label">Nombre:</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" value="<?= $model['nombre'];?>" name="Canchas[nombre]" placeholder="Nombre">

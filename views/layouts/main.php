@@ -37,13 +37,21 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
+                     Yii::$app->user->isGuest ?
+                    ['label' => ''] :
+                    ['label' => 'Canchas', 'url' => ['/canchas/index']],
+                    Yii::$app->user->isGuest ?
+                    ['label' => ''] :
+                    ['label' => 'Partidos', 'url' => ['/partidos/create']],
+                    Yii::$app->user->isGuest ?
+                    ['label' => ''] :
+                    ['label' => 'Consulta', 'url' => ['/consulta/index']],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
                     ['label' => 'Mi perfil', 'url' => ['/usuarios/update?id='.Yii::$app->user->id]],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
                     ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
-                    // ['label' => 'Contact', 'url' => ['/site/contact']],
                     Yii::$app->user->isGuest ?
                         ['label' => 'Entrar', 'url' => ['/site/login']] :
                         ['label' => 'Salir (' . Yii::$app->user->identity->username . ')',

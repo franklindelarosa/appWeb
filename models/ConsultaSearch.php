@@ -60,15 +60,15 @@ class ConsultaSearch extends Consulta
         //      'borrado' => $this->borrado,
         // ]);  
 
-        $query->andFilterWhere(['like', 'Fecha', $this->Nombre])
-            ->andFilterWhere(['like', 'Hora', $this->Telefono])
-            ->andFilterWhere(['like', 'Cancha', $this->Tipo_entidad])
-            ->andFilterWhere(['like', 'Direccion', $this->Cargo])
-            ->andFilterWhere(['like', 'Telefono', $this->Email])
-            ->andFilterWhere(['like', 'Cupo', $this->Entidad])
-            ->andFilterWhere(['like', 'Total', $this->Entidad])
-            ->andFilterWhere(['like', 'Blancos', $this->Entidad])
-            ->andFilterWhere(['like', 'Negros', $this->Entidad]);
+        $query->andFilterWhere(['like', 'Fecha', $this->Fecha])
+            ->andFilterWhere(['like', 'Hora', $this->Hora])
+            ->andFilterWhere(['like', 'Cancha', $this->Cancha])
+            ->andFilterWhere(['like', 'Direccion', $this->Direccion])
+            ->andFilterWhere(['like', 'Telefono', $this->Telefono])
+            ->andFilterWhere(['like', 'Cupo', $this->Cupo])
+            ->andFilterWhere(['like', 'Total', $this->Total])
+            ->andFilterWhere(['like', 'Blancos', $this->Blancos])
+            ->andFilterWhere(['like', 'Negros', $this->Negros]);
        
         return $dataProvider;
     }

@@ -1,6 +1,11 @@
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#TablaConsulta tr').on('dblclick', function(event) {
+
+        $('input[name="ConsultaSearch[Fecha]"]').attr('type', 'date');
+
+        // $("input[name='ConsultaSearch[Fecha]']").datepicker();
+
+        $('#TablaConsulta tr.partido').on('dblclick', function(event) {
             event.preventDefault();
             var data = $(this).attr('data-key');
             $.post('equipos', {id: data}).done(function(data) {
@@ -67,11 +72,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'id' => 'TablaConsulta',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => ['class' => 'partido'],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
 
             // 'id_cancha',
-            'Fecha',
+            ['attribute' => 'Fecha'
+
+
+            ],
+            // 'Fecha',
             'Hora',
             'Cancha',
             'Direccion',

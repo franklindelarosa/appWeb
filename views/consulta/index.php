@@ -1,7 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-        $('input[name="ConsultaSearch[Fecha]"]').attr('type', 'date');
+        // $('input[name="ConsultaSearch[Fecha]"]').attr('type', 'date');
 
         // $("input[name='ConsultaSearch[Fecha]']").datepicker();
 
@@ -47,6 +47,7 @@
         $('#'+tabla).append('<tr><td class="text-center"> Nombre:  '+data['nombre']+'</td></tr>');
         $('#'+tabla).append('<tr><td class="text-center"> Usuario:  '+data['usuario']+'</td></tr>');
         $('#'+tabla).append('<tr><td class="text-center"> Sexo:  '+data['sexo']+'</td></tr>');
+        $('#'+tabla).append('<tr><td class="text-center"> Teléfono:  '+data['telefono']+'</td></tr>');
     }
 </script>
 
@@ -54,6 +55,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CanchasSearch */
@@ -67,6 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+<p class="btn-right"><a class="btn btn-primary" href="index">Borrar consulta</a></p>
 
     <?= GridView::widget([
         'id' => 'TablaConsulta',
@@ -77,11 +80,11 @@ $this->params['breadcrumbs'][] = $this->title;
             // ['class' => 'yii\grid\SerialColumn'],
 
             // 'id_cancha',
-            ['attribute' => 'Fecha'
-
-
-            ],
             // 'Fecha',
+            [
+                'attribute' => 'Fecha',
+                'filter' =>  yii\jui\DatePicker::widget(["name" => "ConsultaSearch[Fecha]", "dateFormat" => "yyyy-MM-dd", 'options' => ['class' => 'form-control']]),
+            ],
             'Hora',
             'Cancha',
             'Direccion',

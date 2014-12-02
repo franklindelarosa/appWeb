@@ -43,7 +43,7 @@ class ConsultaSearch extends Consulta
     public function search($params)
     {
 
-        $query = Consulta::find();
+        $query = Consulta::find()->orderBy(['Fecha' => SORT_DESC]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

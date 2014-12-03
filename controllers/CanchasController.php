@@ -103,6 +103,23 @@ class CanchasController extends Controller
         return $this->redirect(['index']);
     }
 
+    // public function actionUpload()
+    // {
+    //     $model = new Demo;
+    //     if (!empty($_POST)) {
+    //         $model->image = $_POST['Demo']['image'];
+    //         $file = \yii\web\UploadedFile::getInstance($model, 'image');
+    //         var_dump($file);
+
+    //         // You can then do the following
+    //         if ($model->save()) {
+    //             $file->saveAs('path/to/file');
+    //         }
+    //         // its better if you relegate such a code to your model class
+    //     }
+    //     return $this->render('upload', ['modeli'=>$model]);
+    // }
+
     /**
      * Finds the Canchas model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

@@ -103,22 +103,18 @@ class CanchasController extends Controller
         return $this->redirect(['index']);
     }
 
-    // public function actionUpload()
-    // {
-    //     $model = new Demo;
-    //     if (!empty($_POST)) {
-    //         $model->image = $_POST['Demo']['image'];
-    //         $file = \yii\web\UploadedFile::getInstance($model, 'image');
-    //         var_dump($file);
-
-    //         // You can then do the following
-    //         if ($model->save()) {
-    //             $file->saveAs('path/to/file');
-    //         }
-    //         // its better if you relegate such a code to your model class
-    //     }
-    //     return $this->render('upload', ['modeli'=>$model]);
-    // }
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if ($model->validate()) {
+                $model->file->saveAs('images/'.$model->destino.'/'.$model->cancha.'.'. $model->file->extension);
+            }
+        }
+        \Yii::$app->response->format = 'json';
+        return ['respuesta' => 'ok'];
+    }
 
     /**
      * Finds the Canchas model based on its primary key value.

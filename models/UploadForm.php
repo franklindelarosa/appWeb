@@ -14,6 +14,8 @@ class UploadForm extends Model
      * @var UploadedFile|Null file attribute
      */
     public $file;
+    public $cancha;
+    public $destino;
 
     /**
      * @return array the validation rules.
@@ -21,9 +23,9 @@ class UploadForm extends Model
     public function rules()
     {
         return [
-        [['image'], 'safe'],
-        [['image'], 'file', 'types' => 'jpg'],
-    ];
+            [['file'], 'file', 'extensions' => 'gif, jpg, png',],
+            [['cancha', 'destino'], 'required'],
+        ];
     }
 }
 ?>

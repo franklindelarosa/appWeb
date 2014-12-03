@@ -8,6 +8,8 @@ use app\models\CanchasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
 
 /**
  * CanchasController implements the CRUD actions for Canchas model.
@@ -106,14 +108,15 @@ class CanchasController extends Controller
     public function actionUpload()
     {
         $model = new UploadForm();
-        if (Yii::$app->request->isPost) {
+        if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->validate()) {
+                $mask = 'images/'.$model->destino.'/'.$model->cancha.'*.*';
+                array_map('unlink', glob($mask));
                 $model->file->saveAs('images/'.$model->destino.'/'.$model->cancha.'.'. $model->file->extension);
             }
         }
-        \Yii::$app->response->format = 'json';
-        return ['respuesta' => 'ok'];
+        return $this->redirect(['view', 'id' => $model->cancha, 'status' => '1']);
     }
 
     /**

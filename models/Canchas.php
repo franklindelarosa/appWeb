@@ -58,4 +58,17 @@ class Canchas extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Partidos::className(), ['id_cancha' => 'id_cancha']);
     }
+
+    public function getNombrearchivo($directorio){
+        if(file_exists($_SERVER['DOCUMENT_ROOT'].Yii::$app->request->baseUrl."/images/".$directorio."/".$this->id_cancha.".jpg")){
+            return $this->id_cancha.".jpg";
+        }
+        if(file_exists($_SERVER['DOCUMENT_ROOT'].Yii::$app->request->baseUrl."/images/".$directorio."/".$this->id_cancha.".png")){
+            return $this->id_cancha.".png";
+        }
+        if(file_exists($_SERVER['DOCUMENT_ROOT'].Yii::$app->request->baseUrl."/images/".$directorio."/".$this->id_cancha.".gif")){
+            return $this->id_cancha.".gif";
+        }
+        return 'default.jpg';
+    }
 }

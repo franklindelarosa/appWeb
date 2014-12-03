@@ -33,7 +33,7 @@ class ConsultaController extends Controller
 
     public function actionUsuario(){
         $query = (new \yii\db\Query());
-        $query->select('nombre,usuario,sexo,telefono')->from('Usuarios')->where('id_usuario =:id');
+        $query->select('nombre,usuario,sexo,telefono')->from('usuarios')->where('id_usuario =:id');
         $query->addParams(['id'=>$_POST['id']]);
         $user = $query->one();
         \Yii::$app->response->format = 'json';

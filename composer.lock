@@ -338,16 +338,16 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v2.9.0",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "6483dc80d90bdfcca54b89eaa13f72d92e073efb"
+                "reference": "4e201b3815850e11fcb170f8e4d6d6016c2c8908"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/6483dc80d90bdfcca54b89eaa13f72d92e073efb",
-                "reference": "6483dc80d90bdfcca54b89eaa13f72d92e073efb",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/4e201b3815850e11fcb170f8e4d6d6016c2c8908",
+                "reference": "4e201b3815850e11fcb170f8e4d6d6016c2c8908",
                 "shasum": ""
             },
             "type": "library",
@@ -379,7 +379,7 @@
                 "preview",
                 "upload"
             ],
-            "time": "2014-11-23 11:00:15"
+            "time": "2014-12-03 16:19:59"
         },
         {
             "name": "kartik-v/yii2-krajee-base",

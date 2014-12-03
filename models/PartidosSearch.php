@@ -42,7 +42,7 @@ class PartidosSearch extends Partidos
      */
     public function search($params)
     {
-        $query = Partidos::find();
+        $query = Partidos::find()->orderBy(['fecha' => SORT_DESC]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

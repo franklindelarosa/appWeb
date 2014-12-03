@@ -1,8 +1,3 @@
-<script>
-    $(document).ready(function() {
-        $('#canchas-form').bootstrapValidator();
-    });
-</script>
 <?php
 
 use yii\helpers\Html;
@@ -23,40 +18,41 @@ use kartik\widgets\FileInput;
             <div class="panel-body">
 
 				<div class="canchas-form">
-                    <?php $form = ActiveForm::begin(['id' => 'upload-form' ,'options' => ['enctype'=>'multipart/form-data']]);
-                    echo $form->field($modeli, 'image')->widget(FileInput::classname(), [
-                        'options' => ['accept' => 'image/*'],
-                    ]);
-                    echo Html::submitButton('Submit', ['class'=>'btn btn-primary']);
-                    ActiveForm::end();
+                    <?php
+                    // $form = ActiveForm::begin(['id' => 'upload-form' ,'options' => ['enctype'=>'multipart/form-data']]);
+                    // echo $form->field($modeli, 'image')->widget(FileInput::classname(), [
+                    //     'options' => ['accept' => 'image/*'],
+                    // ]);
+                    // echo Html::submitButton('Submit', ['class'=>'btn btn-primary']);
+                    // ActiveForm::end();
                     
                     $form = ActiveForm::begin(['id' => 'canchas-form']); ?>
 
                     <div class="form-group col-md-12">
                         <label for="nombre" class="col-md-2 control-label">Nombre:</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" value="<?= $model['nombre'];?>" name="Canchas[nombre]" data-bv-notempty="true" data-bv-notempty-message="El nombre es requerido" placeholder="Nombre">
+                            <input type="text" class="form-control" value="<?= $model['nombre'];?>" name="Canchas[nombre]" placeholder="Nombre" required>
                         </div>
                     </div>
 
                     <div class="form-group col-md-12">
                         <label for="direccion" class="col-md-2 control-label">Dirección:</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" value="<?= $model['direccion'];?>" name="Canchas[direccion]" data-bv-notempty="true" data-bv-notempty-message="La dirección es requerida" placeholder="Dirección">
+                            <input type="text" class="form-control" value="<?= $model['direccion'];?>" name="Canchas[direccion]" placeholder="Dirección" required>
                         </div>
                     </div>
 
                     <div class="form-group col-md-12">
                         <label for="telefono" class="col-md-2 control-label">Telefono:</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" value="<?= $model['telefono'];?>" name="Canchas[telefono]" data-bv-notempty="true" data-bv-notempty-message="El teléfono es requerido" placeholder="Telefono">
+                            <input type="text" class="form-control" value="<?= $model['telefono'];?>" name="Canchas[telefono]" placeholder="Telefono" required>
                         </div>
                     </div>
 
                     <div class="form-group col-md-12">
                         <label for="cupo_max" class="col-md-2 control-label">Cupo Máximo:</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" value="<?= $model['cupo_max'];?>" name="Canchas[cupo_max]" data-bv-notempty="true" data-bv-notempty-message="El cupo máximo es requerido" data-bv-regexp="true" data-bv-regexp-regexp="^[0-9\s]+$" data-bv-regexp-message="Ingrese sólo números" placeholder="Cupo Máximo">
+                            <input type="number" class="form-control" value="<?= $model['cupo_max'];?>" name="Canchas[cupo_max]" placeholder="Cupo Máximo" required>
                         </div>
                     </div>
 

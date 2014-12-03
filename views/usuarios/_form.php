@@ -2,10 +2,6 @@
     $(document).ready(function() {
         $('#sexo').val("<?= $model['sexo'];?>");
         $('#perfil').val("<?= $model['perfil'] ?>");
-        $('#usuarios-form').bootstrapValidator().on('error.validator.bv', function(e, data) {
-            data.element.data('bv.messages').find('.help-block[data-bv-for="' + data.field + '"]').hide()
-            .filter('[data-bv-validator="' + data.validator + '"]').show();
-        });
     });
 </script>
 <?php
@@ -32,28 +28,28 @@ use yii\widgets\ActiveForm;
                 <div class="form-group col-md-12">
                     <label for="nombre" class="col-md-2 control-label">Nombre:</label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control" value="<?= $model['nombre'];?>" name="Usuarios[nombre]" data-bv-notempty="true" data-bv-notempty-message="El nombre es requerido" placeholder="Nombre">
+                        <input type="text" class="form-control" value="<?= $model['nombre'];?>" name="Usuarios[nombre]" placeholder="Nombre" required>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12">
                     <label for="nombre" class="col-md-2 control-label">Usuario:</label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control" value="<?= $model['usuario'];?>" name="Usuarios[usuario]" data-bv-notempty="true" data-bv-notempty-message="El nombre de usuario es requerido" placeholder="Usuario">
+                        <input type="text" class="form-control" value="<?= $model['usuario'];?>" name="Usuarios[usuario]" placeholder="Usuario" required>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12">
                     <label for="nombre" class="col-md-2 control-label">Contraseña:</label>
                     <div class="col-md-10">
-                        <input type="password" class="form-control" name="Usuarios[contrasena]" data-bv-notempty="true" data-bv-notempty-message="La contraseña es requerida" placeholder="Contraseña">
+                        <input type="password" class="form-control" name="Usuarios[contrasena]" placeholder="Contraseña" required>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12">
                     <label for="nombre" class="col-md-2 control-label">Sexo:</label>
                     <div class="col-md-10">
-                        <select id="sexo" name="Usuarios[sexo]" data-bv-notempty="true" data-bv-notempty-message="El sexo es requerido" class="form-control">
+                        <select id="sexo" name="Usuarios[sexo]" class="form-control" required>
                             <option value="">Selecciona el sexo</option>
                             <option value="m">Masculino</option>
                             <option value="f">Femenino</option>

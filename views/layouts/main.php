@@ -17,7 +17,6 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <link rel="stylesheet" href="<?= Yii::$app->request->baseUrl; ?>/css/bootstrapValidator.min.css"/>
     <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/jquery.min.js"></script>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -42,13 +41,13 @@ AppAsset::register($this);
                     ['label' => 'Canchas', 'url' => ['/canchas/index']],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
-                    ['label' => 'Partidos', 'url' => ['/partidos/create']],
+                    ['label' => 'Crear partido', 'url' => ['/partidos/create']],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
                     ['label' => 'Consulta', 'url' => ['/consulta/index']],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
-                    ['label' => 'Mi perfil', 'url' => ['/usuarios/update?id='.Yii::$app->user->id]],
+                    ['label' => 'Mi perfil', 'url' => ['/usuarios/view?id='.Yii::$app->user->id]],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
                     ['label' => 'Usuarios', 'url' => ['/usuarios/index']],

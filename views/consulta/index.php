@@ -33,6 +33,17 @@
             $('#infoUsuario').empty();
         });
 
+        $(document).ajaxStart(function() {
+            $('.globalMask').show();
+        }).ajaxStop(function() {
+            $('.globalMask').hide();
+        });
+        $(document).ajaxStart(function() {
+            $(".loader").show();
+        }).ajaxStop(function() {
+            $(".loader").hide();
+        });
+
     });
 
     function generarTabla(data,tabla,equipo,n){        
@@ -70,6 +81,10 @@ $this->title = 'Consulta';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="canchas-index">
+
+    <div class="globalMask">
+            <div class="loader toolbar"></div>
+    </div>
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

@@ -1,9 +1,23 @@
 <script type="text/javascript">
-    $(document).on('click','[class$="grid-view"] table tbody tr',function()
-    {
-        var url = $(this).children(':last-child()').find('a[tittle=View] ').attr('href');
-        $(location).attr('href',url);
+    $(document).ready(function() {        
+        $(document).on('click','[class$="grid-view"] table tbody tr',function()
+        {
+            var url = $(this).children(':last-child()').find('a[title="View"] ').attr('href');
+            $(location).attr('href',url);
+        });
     });
+
+    $(".globalMask").hide().ajaxStart(function() {
+        $(this).show();
+    }).ajaxStop(function() {
+        $(this).hide();
+    });
+    $(".loader").hide().ajaxStart(function() {
+        $(this).show();
+    }).ajaxStop(function() {
+        $(this).hide();
+    });
+
 </script>
 
 <?php
@@ -19,6 +33,10 @@ $this->title = 'Canchas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="canchas-index">
+
+    <div class="globalMask">
+            <div class="loader"></div>
+    </div>
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -38,8 +56,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'direccion',
             'telefono',
             'cupo_max',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['hidden' => ''],
+                'headerOptions' => ['hidden' => ''],
+                'filterOptions' => ['hidden' => ''],
+            ],
 
         ],
         

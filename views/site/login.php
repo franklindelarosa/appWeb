@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = 'Ingresar';
 				<h3 class="panel-title">Ingresar</h3>
 			</div>
 			<div class="panel-body">
-				<p class="text-center"><img src="<?= Yii::$app->request->baseUrl; ?>/images/logo_login.jpg" alt="Futbol Cracks"></p>
+				<p class="text-center"><img src="<?= Yii::$app->request->baseUrl; ?>/images/logo.png" alt="Futbol Cracks"></p>
 				<?php $form = ActiveForm::begin([
 					'id' => 'login-form',
 					'options' => ['class' => 'form-horizontal'],

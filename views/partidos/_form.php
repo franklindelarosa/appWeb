@@ -47,6 +47,13 @@ use yii\widgets\ActiveForm;
                     <input value="<?= $model->costo; ?>" type="number" id="partidos-costo" class="form-control" name="Partidos[costo]" required>
                 </div>
             </div>
+
+            <div class="form-group col-md-12 field-partidos-costo">
+                <label class="col-md-3 control-label">Precio de venta:</label>
+                <div class="col-md-8">
+                    <input value="<?= $model->venta; ?>" type="number" id="partidos-venta" class="form-control" name="Partidos[venta]" required>
+                </div>
+            </div>
             <?php if(!$model->isNewRecord){ ?>
             <div class="form-group col-md-12 field-partidos-estado">
                 <label class="col-md-3 control-label">Estado del partido:</label>

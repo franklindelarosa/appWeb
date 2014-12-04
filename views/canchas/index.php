@@ -1,3 +1,11 @@
+<script type="text/javascript">
+    $(document).on('click','[class$="grid-view"] table tbody tr',function()
+    {
+        var url = $(this).children(':last-child()').find('a[tittle=View] ').attr('href');
+        $(location).attr('href',url);
+    });
+</script>
+
 <?php
 
 use yii\helpers\Html;
@@ -15,8 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Crear Cancha', ['create'], ['class' => 'btn btn-success']) ?>
+    <p class="btn-right">
+        <?= Html::a('Crear Cancha', ['create'], ['class' => 'btn btn-success btn-lg']) ?>
     </p>
 
     <?= GridView::widget([

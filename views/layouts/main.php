@@ -25,9 +25,10 @@ AppAsset::register($this);
 
 <?php $this->beginBody() ?>
     <div class="wrap">
+        
         <?php
             NavBar::begin([
-                'brandLabel' => 'Futbol Cracks',
+                'brandLabel' => '<a class="navbar-brand" href="'.Yii::$app->homeUrl.'"><img alt="Brand" src="'.Yii::$app->request->baseUrl.'/images/icono.png">&nbspFutbol Cracks</a>',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -38,24 +39,42 @@ AppAsset::register($this);
                 'items' => [
                      Yii::$app->user->isGuest ?
                     ['label' => ''] :
-                    ['label' => 'Canchas', 'url' => ['/canchas/index']],
+                    ['label' => 'Canchas', 
+                        'items' => [
+                            ['label' => 'Listado de canchas', 'url' => ['/canchas/index']],
+                            ['label' => 'Registrar cancha', 'url' => ['/canchas/create']],
+                        ],
+                    ],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
-                    ['label' => 'Crear partido', 'url' => ['/partidos/create']],
+                    ['label' => 'Partidos', 
+                        'items' => [
+                            ['label' => 'Listado de partidos', 'url' => ['/partidos/index']],
+                            ['label' => 'Registrar partido', 'url' => ['/partidos/create']],
+                        ],
+                    ],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
                     ['label' => 'Consulta', 'url' => ['/consulta/index']],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
-                    ['label' => 'Mi perfil', 'url' => ['/usuarios/view?id='.Yii::$app->user->id]],
+                    ['label' => 'Usuarios', 
+                        'items' => [
+                            ['label' => 'Listado de usuarios', 'url' => ['/usuarios/index']],
+                            ['label' => 'Registrar usuario', 'url' => ['/usuarios/create']],
+                        ],
+                    ],
                     Yii::$app->user->isGuest ?
-                    ['label' => ''] :
-                    ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
-                    Yii::$app->user->isGuest ?
-                        ['label' => 'Entrar', 'url' => ['/site/login']] :
-                        ['label' => 'Salir (' . Yii::$app->user->identity->username . ')',
-                            'url' => ['/site/logout'],
-                            'linkOptions' => ['data-method' => 'post']],
+                        ['label' => ''] :
+                        [
+                            'label' => 'Mi perfil',
+                            'items' => [
+                                ['label' => 'Mi perfil', 'url' => ['/usuarios/view?id='.Yii::$app->user->id]],
+                                ['label' => 'Salir (' . Yii::$app->user->identity->username . ')',
+                                    'url' => ['/site/logout'],
+                                    'linkOptions' => ['data-method' => 'post']],
+                            ]
+                        ]
                 ],
             ]);
             NavBar::end();
@@ -71,8 +90,8 @@ AppAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-            <p class="pull-right"><?= Yii::powered() ?></p>
+            <p class="pull-left">&copy; Fútbol Cracks <?= date('Y') ?></p>
+            <p class="pull-right">Powered by Elecsis</p>
         </div>
     </footer>
 

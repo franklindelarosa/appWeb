@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'fecha',
             'hora',
             'costo',
+            'venta',
             'estado',
             'id_cancha',
         ],

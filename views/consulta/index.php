@@ -1,22 +1,18 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-        // $('input[name="ConsultaSearch[Fecha]"]').attr('type', 'date');
-
-        // $("input[name='ConsultaSearch[Fecha]']").datepicker();
-
-        $('#TablaConsulta tr.partido').on('dblclick', function(event) {
+        $('#TablaConsulta tr.partido').on('click', function(event) {
             event.preventDefault();
             var data = $(this).attr('data-key');
             $.post('equipos', {id: data}).done(function(data) {
                 generarTabla(data[0],'equipoBlanco','Blanco',data[2]-data[0].length);
                 generarTabla(data[1],'equipoNegro','Negro',data[2]-data[1].length);
+                $('#myModal').modal({backdrop:'static'});
                 // console.log(data);
             });
-            $('#myModal').modal({backdrop:'static'});
         });
 
-        $('#cuerpoModal').on('dblclick','td', function(event) {
+        $('#cuerpoModal').on('click','td', function(event) {
             event.preventDefault();
             var data = $(this).attr('data-id');
             if(data!=null){
@@ -26,6 +22,15 @@
                     // console.log(data);
                 });
             }else{alert('Seleccione un usuario válido')}
+        });
+
+        $('#myModal').on('hidden.bs.modal', function(event) {
+            $('#equipoBlanco').empty();
+            $('#equipoNegro').empty();
+        });
+
+        $('#usuarioModal').on('hidden.bs.modal', function(event) {
+            $('#infoUsuario').empty();
         });
 
     });
@@ -43,7 +48,7 @@
 
     function generarTablaUsuario(data,tabla){
         $('#'+tabla).empty();
-        $('#'+tabla).append('<tr><th> Datos de usuario </th></tr>');
+        $('#'+tabla).append('<tr><th class="text-center"> Datos de usuario </th></tr>');
         $('#'+tabla).append('<tr><td class="text-center"> Nombre:  '+data['nombre']+'</td></tr>');
         $('#'+tabla).append('<tr><td class="text-center"> Usuario:  '+data['usuario']+'</td></tr>');
         $('#'+tabla).append('<tr><td class="text-center"> Sexo:  '+data['sexo']+'</td></tr>');
@@ -69,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<p class="btn-right"><a class="btn btn-primary" href="index">Borrar consulta</a></p>
+<p class="btn-right"><a class="btn btn-primary  btn-lg" href="index">Borrar consulta</a></p>
 
     <?= GridView::widget([
         'id' => 'TablaConsulta',
@@ -91,9 +96,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'Telefono',
             ['attribute' => 'Cupo', 'label' => 'Cupo máximo'],
             // 'Cupo',
-            'Total',
-            'Blancos',
-            'Negros',
+            // 'Total',
+            ['attribute' => 'Total', 'label' => 'Cupos reservados'],
+            // 'Blancos',
+            ['attribute' => 'Blancos', 'label' => 'Equipo blanco'],
+            // 'Negros',
+            ['attribute' => 'Negros', 'label' => 'Equipo negro'],
 
             // ['class' => 'yii\grid\ActionColumn'],
         ],
@@ -122,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <div id="usuarioModal" class="modal fade bs-example-modal-sm" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>

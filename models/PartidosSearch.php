@@ -18,9 +18,9 @@ class PartidosSearch extends Partidos
     public function rules()
     {
         return [
-            [['id_partido', 'estado', 'id_cancha'], 'integer'],
+            [['id_partido', 'estado', 'blancos', 'negros', 'id_cancha'], 'integer'],
             [['fecha', 'hora'], 'safe'],
-            [['costo'], 'number'],
+            [['costo', 'venta'], 'number'],
         ];
     }
 
@@ -57,7 +57,10 @@ class PartidosSearch extends Partidos
             'fecha' => $this->fecha,
             'hora' => $this->hora,
             'costo' => $this->costo,
+            'venta' => $this->venta,
             'estado' => $this->estado,
+            'blancos' => $this->blancos, 
+            'negros' => $this->negros, 
             'id_cancha' => $this->id_cancha,
         ]);
 

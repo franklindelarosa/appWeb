@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
+use yii\db\Query;
 
 /**
  * CanchasController implements the CRUD actions for Canchas model.
@@ -100,8 +101,11 @@ class CanchasController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_cancha]);
         } else {
+            $query = new Query;
+            $estados = $query->select('*')->from('estados')->where('entidad = "canchas"')->all();
             return $this->render('update', [
                 'model' => $model,
+                'estados' => $estados,
             ]);
         }
     }

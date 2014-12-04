@@ -2,6 +2,7 @@
     $(document).ready(function() {
         $('#sexo').val("<?= $model['sexo'];?>");
         $('#perfil').val("<?= $model['perfil'] ?>");
+        $('#usuarios-estado').val("<?= $model['estado'] ?>");
     });
 </script>
 <?php
@@ -13,12 +14,10 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Usuarios */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<br>
 <div class="col-md-9 col-md-offset-2">
         <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Usuarios</h3>
-            </div>
+            <br>
             <div class="panel-body">
 
             <div class="usuarios-form">
@@ -56,6 +55,21 @@ use yii\widgets\ActiveForm;
                         </select>
                     </div>
                 </div>
+
+                <?php if(!$model->isNewRecord){ ?>
+                <div class="form-group col-md-12 field-usuarios-estado">
+                    <label class="col-md-2 control-label">Estado del partido:</label>
+                    <div class="col-md-10">
+                        <select class="form-control" name="Usuarios[estado]" required id="usuarios-estado">
+                            <option value="">Selecciona un estado</option>
+                            <?php foreach($estados as $row){?>
+                                <option value="<?= $row['id_estado'];?>"><?= $row['nombre'];?></option>
+                            <?php }?>
+                        </select>
+                    </div>
+                </div>
+                <?php } ?>
+
                 <?php if(Yii::$app->user->can('Administrador')){?>
                 <div class="form-group col-md-12">
                     <label for="nombre" class="col-md-2 control-label">Perfil:</label>

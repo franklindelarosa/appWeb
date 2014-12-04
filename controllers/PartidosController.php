@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Canchas;
+use yii\db\Query;
 
 /**
  * PartidosController implements the CRUD actions for Partidos model.
@@ -104,10 +105,13 @@ class PartidosController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_partido]);
         } else {
+            $query = new Query;
+            $estados = $query->select('*')->from('estados')->where('entidad = "partidos"')->all();
             $canchas = Canchas::find()->all();
             return $this->render('update', [
                 'model' => $model,
                 'canchas' => $canchas,
+                'estados' => $estados,
             ]);
         }
     }

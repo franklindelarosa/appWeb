@@ -123,8 +123,10 @@ class UsuariosController extends Controller
             } else {
                 $query = new Query;
                 $roles = $query->select('name')->from('items')->all();
+                $estados = $query->select('*')->from('estados')->where('entidad = "usuarios"')->all();
                 return $this->render('update', [
                     'model' => $model,
+                    'estados' => $estados,
                     'roles' => $roles,
                 ]);
             }

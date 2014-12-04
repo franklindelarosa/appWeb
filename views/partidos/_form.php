@@ -3,6 +3,7 @@
         $('#partidos-estado').val('<?= $model->estado; ?>');
         $('#partidos-id_cancha').val('<?= $model->id_cancha; ?>');
         $('#partidos-fecha').val('<?= $model->fecha; ?>');
+        $('#partidos-estado').val('<?= $model->estado; ?>');
     });
 </script>
 <?php
@@ -16,13 +17,11 @@ use yii\widgets\ActiveForm;
 ?>
 
 
-
+<br>
 <div class="partidos-form">
     <div class="col-sm-8 col-sm-offset-2">
         <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Registrar perfil</h3>
-            </div>
+            <br>
             <div class="panel-body">
 
             <?php $form = ActiveForm::begin(['id' => 'partidos-form']); ?>
@@ -48,21 +47,22 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
 
-            <div class="form-group col-md-12 field-partidos-costo">
+            <div class="form-group col-md-12 field-partidos-venta">
                 <label class="col-md-3 control-label">Precio de venta:</label>
                 <div class="col-md-8">
                     <input value="<?= $model->venta; ?>" type="number" id="partidos-venta" class="form-control" name="Partidos[venta]" required>
                 </div>
             </div>
+
             <?php if(!$model->isNewRecord){ ?>
             <div class="form-group col-md-12 field-partidos-estado">
                 <label class="col-md-3 control-label">Estado del partido:</label>
                 <div class="col-md-8">
                     <select class="form-control" name="Partidos[estado]" required id="partidos-estado">
                         <option value="">Selecciona un estado</option>
-                        <option value="1">Disponible para inscripción</option>
-                        <option value="2">No disponible para inscripción</option>
-                        <option value="3">Cancelado</option>
+                        <?php foreach($estados as $row){?>
+                            <option value="<?= $row['id_estado'];?>"><?= $row['nombre'];?></option>
+                        <?php }?>
                     </select>
                 </div>
             </div>
@@ -81,8 +81,11 @@ use yii\widgets\ActiveForm;
             </div>
 
             <div class= "col-md-12">
-                <div class="form-group col-md-12 text-center">
+                <div class="form-group col-md-6 text-center">
                     <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => 'btn btn-success']) ?>
+                </div>
+                <div class="form-group col-md-6 text-center">
+                    <a href="index" class="btn btn-primary">Volver</a>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>

@@ -37,9 +37,9 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                     Yii::$app->user->isGuest ?
+                    Yii::$app->user->isGuest ?
                     ['label' => ''] :
-                    ['label' => 'Canchas', 
+                    ['label' => 'Canchas',
                         'items' => [
                             ['label' => 'Listado de canchas', 'url' => ['/canchas/index']],
                             ['label' => 'Registrar cancha', 'url' => ['/canchas/create']],
@@ -47,7 +47,7 @@ AppAsset::register($this);
                     ],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
-                    ['label' => 'Partidos', 
+                    ['label' => 'Partidos',
                         'items' => [
                             ['label' => 'Listado de partidos', 'url' => ['/partidos/index']],
                             ['label' => 'Registrar partido', 'url' => ['/partidos/create']],
@@ -55,15 +55,23 @@ AppAsset::register($this);
                     ],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
-                    ['label' => 'Consulta', 'url' => ['/consulta/index']],
-                    Yii::$app->user->isGuest ?
-                    ['label' => ''] :
-                    ['label' => 'Usuarios', 
+                    ['label' => 'Usuarios',
                         'items' => [
                             ['label' => 'Listado de usuarios', 'url' => ['/usuarios/index']],
                             ['label' => 'Registrar usuario', 'url' => ['/usuarios/create']],
                         ],
                     ],
+                    Yii::$app->user->isGuest ?
+                    ['label' => ''] :
+                    ['label' => 'Estados',
+                        'items' => [
+                            ['label' => 'Listado de estados', 'url' => ['/estados/index']],
+                            ['label' => 'Registrar estado', 'url' => ['/estados/create']],
+                        ],
+                    ],
+                    Yii::$app->user->isGuest ?
+                    ['label' => ''] :
+                    ['label' => 'Consulta', 'url' => ['/consulta/index']],
                     Yii::$app->user->isGuest ?
                         ['label' => ''] :
                         [

@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\Canchas;
 use app\models\CanchasSearch;
 use yii\web\Controller;
@@ -23,6 +24,22 @@ class CanchasController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'logout'],
+                'rules' => [
+                    [
+                        'allow' => false,
+                        // 'actions' => ['index'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        // 'actions' => ['index', 'logout'],
+                        'allow' => true,
+                        'roles' => ['Administrador'],
+                    ],
                 ],
             ],
         ];

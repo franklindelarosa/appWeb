@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\Partidos;
 use app\models\PartidosSearch;
 use yii\web\Controller;
@@ -22,6 +23,22 @@ class PartidosController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                // 'only' => ['index', 'logout'],
+                'rules' => [
+                    [
+                        'allow' => false,
+                        // 'actions' => ['index'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        // 'actions' => ['index', 'logout'],
+                        'allow' => true,
+                        'roles' => ['Administrador'],
+                    ],
                 ],
             ],
         ];

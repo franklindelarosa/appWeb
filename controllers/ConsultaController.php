@@ -3,12 +3,35 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\Consulta;
 use app\models\ConsultaSearch;
 use yii\web\Controller;
 
 class ConsultaController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                // 'only' => ['index', 'logout'],
+                'rules' => [
+                    [
+                        'allow' => false,
+                        // 'actions' => ['index'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        // 'actions' => ['index', 'logout'],
+                        'allow' => true,
+                        'roles' => ['Administrador'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
     	$searchModel = new ConsultaSearch();

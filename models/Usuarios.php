@@ -13,10 +13,12 @@ use Yii;
  * @property string $contrasena
  * @property string $sexo
  * @property string $perfil
+ * @property integer $estado
  * @property string $telefono
  * @property string $correo
  *
  * @property Invitaciones[] $invitaciones
+ * @property Estados $estado
  * @property UsuariosPartidos[] $usuariosPartidos
  */
 class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
@@ -38,10 +40,12 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     {
         return [
             [['nombre', 'usuario', 'contrasena', 'sexo'], 'required'],
+            [['estado'], 'integer'],
             [['nombre', 'usuario', 'perfil', 'correo'], 'string', 'max' => 45],
             [['contrasena'], 'string', 'max' => 70],
             [['sexo'], 'string', 'max' => 1],
-            [['telefono'], 'string', 'max' => 20]
+            [['telefono'], 'string', 'max' => 20],
+           [['usuario'], 'unique']
         ];
     }
 
@@ -57,6 +61,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             'contrasena' => 'Contrasena',
             'sexo' => 'Sexo',
             'perfil' => 'Perfil',
+            'estado' => 'Estado',
             'telefono' => 'Telefono',
             'correo' => 'Correo',
         ];
@@ -68,6 +73,11 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function getInvitaciones()
     {
         return $this->hasMany(Invitaciones::className(), ['id_usuario' => 'id_usuario']);
+    }
+
+    public function getEstado()
+    {
+        return $this->hasOne(Estados::className(), ['id_estado' => 'estado']);
     }
 
     /**

@@ -17,6 +17,7 @@ use Yii;
  * @property integer $negros
  * @property integer $id_cancha
  *
+ * @property Estados $estado
  * @property Canchas $idCancha
  * @property UsuariosPartidos[] $usuariosPartidos
  */
@@ -36,7 +37,7 @@ class Partidos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fecha', 'hora', 'costo', 'venta'], 'required'],
+            [['fecha', 'hora', 'costo'], 'required'],
             [['fecha', 'hora'], 'safe'],
             [['costo', 'venta'], 'number'],
             [['estado', 'blancos', 'negros', 'id_cancha'], 'integer']
@@ -67,6 +68,11 @@ class Partidos extends \yii\db\ActiveRecord
     public function getIdCancha()
     {
         return $this->hasOne(Canchas::className(), ['id_cancha' => 'id_cancha']);
+    }
+
+    public function getEstado()
+    {
+        return $this->hasOne(Estados::className(), ['id_estado' => 'estado']);
     }
 
     /**

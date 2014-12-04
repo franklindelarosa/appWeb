@@ -12,6 +12,9 @@ use Yii;
  * @property string $direccion
  * @property string $telefono
  * @property integer $cupo_max
+ * @property integer $estado
+ *
+ * @property Estados $estado
  *
  * @property Partidos[] $partidos
  */
@@ -32,7 +35,7 @@ class Canchas extends \yii\db\ActiveRecord
     {
         return [
             [['nombre', 'direccion', 'telefono', 'cupo_max'], 'required'],
-            [['cupo_max'], 'integer'],
+            [['cupo_max', 'estado'], 'integer'],
             [['nombre', 'direccion', 'telefono'], 'string', 'max' => 45]
         ];
     }
@@ -48,6 +51,7 @@ class Canchas extends \yii\db\ActiveRecord
             'direccion' => 'Direccion',
             'telefono' => 'Telefono',
             'cupo_max' => 'Cupo Max',
+            'estado' => 'Estado',
         ];
     }
 
@@ -57,6 +61,11 @@ class Canchas extends \yii\db\ActiveRecord
     public function getPartidos()
     {
         return $this->hasMany(Partidos::className(), ['id_cancha' => 'id_cancha']);
+    }
+
+    public function getEstado()
+    {
+        return $this->hasOne(Estados::className(), ['id_estado' => 'estado']);
     }
 
     public function getNombrearchivo($directorio){

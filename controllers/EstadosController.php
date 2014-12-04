@@ -4,18 +4,16 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-use app\models\Canchas;
-use app\models\CanchasSearch;
+use app\models\Estados;
+use app\models\EstadosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\UploadForm;
-use yii\web\UploadedFile;
 
 /**
- * CanchasController implements the CRUD actions for Canchas model.
+ * EstadosController implements the CRUD actions for Estados model.
  */
-class CanchasController extends Controller
+class EstadosController extends Controller
 {
     public function behaviors()
     {
@@ -43,12 +41,12 @@ class CanchasController extends Controller
     }
 
     /**
-     * Lists all Canchas models.
+     * Lists all Estados models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CanchasSearch();
+        $searchModel = new EstadosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -58,7 +56,7 @@ class CanchasController extends Controller
     }
 
     /**
-     * Displays a single Canchas model.
+     * Displays a single Estados model.
      * @param integer $id
      * @return mixed
      */
@@ -70,16 +68,16 @@ class CanchasController extends Controller
     }
 
     /**
-     * Creates a new Canchas model.
+     * Creates a new Estados model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Canchas();
+        $model = new Estados();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_cancha]);
+            return $this->redirect(['view', 'id' => $model->id_estado]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -88,7 +86,7 @@ class CanchasController extends Controller
     }
 
     /**
-     * Updates an existing Canchas model.
+     * Updates an existing Estados model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,7 +96,7 @@ class CanchasController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_cancha]);
+            return $this->redirect(['view', 'id' => $model->id_estado]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -107,7 +105,7 @@ class CanchasController extends Controller
     }
 
     /**
-     * Deletes an existing Canchas model.
+     * Deletes an existing Estados model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -119,30 +117,16 @@ class CanchasController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionUpload()
-    {
-        $model = new UploadForm();
-        if ($model->load(Yii::$app->request->post())) {
-            $model->file = UploadedFile::getInstance($model, 'file');
-            if ($model->validate()) {
-                $mask = 'images/'.$model->destino.'/'.$model->cancha.'*.*';
-                array_map('unlink', glob($mask));
-                $model->file->saveAs('images/'.$model->destino.'/'.$model->cancha.'.'. $model->file->extension);
-            }
-        }
-        return $this->redirect(['view', 'id' => $model->cancha, 'status' => '1']);
-    }
-
     /**
-     * Finds the Canchas model based on its primary key value.
+     * Finds the Estados model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Canchas the loaded model
+     * @return Estados the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Canchas::findOne($id)) !== null) {
+        if (($model = Estados::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

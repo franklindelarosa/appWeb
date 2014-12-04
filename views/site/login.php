@@ -5,9 +5,6 @@ $this->params['breadcrumbs'][] = 'Ingresar';
 <div class="row">
 	<div class="col-md-6 col-md-offset-3 ">
 		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h3 class="panel-title">Ingresar</h3>
-			</div>
 			<div class="panel-body">
 				<p class="text-center"><img src="<?= Yii::$app->request->baseUrl; ?>/images/logo.png" alt="Futbol Cracks"></p>
 				<?php $form = ActiveForm::begin([

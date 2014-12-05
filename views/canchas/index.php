@@ -1,23 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function() {        
-        $(document).on('click','[class$="grid-view"] table tbody tr',function()
-        {
-            var url = $(this).children(':last-child()').find('a[title="View"] ').attr('href');
-            $(location).attr('href',url);
-        });
+       linkView();
     });
-
-    $(".globalMask").hide().ajaxStart(function() {
-        $(this).show();
-    }).ajaxStop(function() {
-        $(this).hide();
-    });
-    $(".loader").hide().ajaxStart(function() {
-        $(this).show();
-    }).ajaxStop(function() {
-        $(this).hide();
-    });
-
 </script>
 
 <?php
@@ -48,14 +32,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => ['class' => 'text-center'],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
 
             // 'id_cancha',
+            
             'nombre',
             'direccion',
             'telefono',
             'cupo_max',
+            // 'estado',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => ['hidden' => ''],

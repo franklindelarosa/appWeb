@@ -18,7 +18,7 @@ class CanchasSearch extends Canchas
     public function rules()
     {
         return [
-            [['id_cancha', 'cupo_max'], 'integer'],
+            [['id_cancha', 'cupo_max', 'estado'], 'integer'],
             [['nombre', 'direccion', 'telefono'], 'safe'],
         ];
     }
@@ -54,6 +54,7 @@ class CanchasSearch extends Canchas
         $query->andFilterWhere([
             'id_cancha' => $this->id_cancha,
             'cupo_max' => $this->cupo_max,
+            'estado' => $this->estado,
         ]);
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre])

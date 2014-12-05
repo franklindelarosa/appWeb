@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
             <?php $form = ActiveForm::begin(['id' => 'partidos-form']); ?>
             <div class="form-group col-md-12 field-partidos-fecha required">
-                <label class="col-md-3 control-label">Fecha del partido:</label>
+                <label class="col-md-4 control-label">Fecha del partido:</label>
                 <div class="col-md-8">
                     <?= yii\jui\DatePicker::widget(["id" => "partidos-fecha", "name" => "Partidos[fecha]", "dateFormat" => "yyyy-MM-dd", 'options' => ['required' => '', 'class' => 'form-control', "placeholder" => "aaaa-mm-dd"]])?>
                     <!-- <input value="<?= $model->fecha; ?>" placeholder="aaaa-mm-dd" type="date" id="partidos-fecha" class="form-control" name="Partidos[fecha]"> -->
@@ -34,29 +34,29 @@ use yii\widgets\ActiveForm;
             </div>
 
             <div class="form-group col-md-12 field-partidos-hora">
-                <label class="col-md-3 control-label">Hora del partido:</label>
+                <label class="col-md-4 control-label">Hora del partido:</label>
                 <div class="col-md-8">
                     <input value="<?= $model->hora; ?>" type="time" id="partidos-hora" class="form-control" name="Partidos[hora]" required>
                 </div>
             </div>
 
             <div class="form-group col-md-12 field-partidos-costo">
-                <label class="col-md-3 control-label">Costo del partido:</label>
-                <div class="col-md-8">
-                    <input value="<?= $model->costo; ?>" type="number" id="partidos-costo" class="form-control" name="Partidos[costo]" required>
+                <label class="col-md-4 control-label">Costo del partido:</label>
+                <div class="col-md-8 input-group">
+                    <span class="input-group-addon">$</span><input value="<?= $model->costo; ?>" type="number" id="partidos-costo" class="form-control" name="Partidos[costo]" required>
                 </div>
             </div>
 
             <div class="form-group col-md-12 field-partidos-venta">
-                <label class="col-md-3 control-label">Precio de venta:</label>
-                <div class="col-md-8">
-                    <input value="<?= $model->venta; ?>" type="number" id="partidos-venta" class="form-control" name="Partidos[venta]" required>
+                <label class="col-md-4 control-label">Precio de venta:</label>
+                <div class="col-md-8 input-group">
+                    <span class="input-group-addon">$</span><input value="<?= $model->venta; ?>" type="number" id="partidos-venta" class="form-control" name="Partidos[venta]" required>
                 </div>
             </div>
 
             <?php if(!$model->isNewRecord){ ?>
             <div class="form-group col-md-12 field-partidos-estado">
-                <label class="col-md-3 control-label">Estado del partido:</label>
+                <label class="col-md-4 control-label">Estado del partido:</label>
                 <div class="col-md-8">
                     <select class="form-control" name="Partidos[estado]" required id="partidos-estado">
                         <option value="">Selecciona un estado</option>
@@ -69,7 +69,7 @@ use yii\widgets\ActiveForm;
             <?php } ?>
 
             <div class="form-group col-md-12 field-partidos-id_cancha required">
-                <label class="col-md-3 control-label">Cancha:</label>
+                <label class="col-md-4 control-label">Cancha:</label>
                 <div class="col-md-8">
                     <select class="form-control" name="Partidos[id_cancha]" required id="partidos-id_cancha">
                         <option value="">Selecciona una cancha</option>
@@ -85,7 +85,7 @@ use yii\widgets\ActiveForm;
                     <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => 'btn btn-success']) ?>
                 </div>
                 <div class="form-group col-md-6 text-center">
-                    <a href="index" class="btn btn-primary">Volver</a>
+                    <a href="<?=Yii::$app->homeUrl;?>" class="btn btn-primary">Volver</a>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>

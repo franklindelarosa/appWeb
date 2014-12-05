@@ -59,6 +59,7 @@ class Partidos extends \yii\db\ActiveRecord
             'blancos' => 'Blancos',
             'negros' => 'Negros',
             'id_cancha' => 'Id Cancha',
+            'canchaName' => Yii::t('app', 'idCancha'),
         ];
     }
 

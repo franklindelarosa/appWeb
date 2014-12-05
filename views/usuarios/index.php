@@ -1,3 +1,9 @@
+<script type="text/javascript">
+    $(document).ready(function() {        
+        linkView();
+    });
+
+</script>
 <?php
 
 use yii\helpers\Html;
@@ -16,32 +22,34 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p class="btn-right">
-        <?= Html::a('Crear Usuarios', ['create'], ['class' => 'btn btn-success btn-lg']) ?>
+        <?= Html::a('Crear Usuarios', ['create'], ['class' => 'btn btn-success  btn-lg']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => ['class' => 'text-center'],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
 
             // 'id_usuario',
             'nombre',
-            // 'usuario',
-            'correo',
-            'telefono',
+            'usuario',
             // 'contrasena',
             // 'sexo',
             ['attribute' => 'sexo',
             'value' => function($sexo){ if($sexo === 'f'){return 'Femenino';}else{return 'Masculino';}},
             'filter' => ['m' => 'Masculino', 'f' => 'Femenino'],
             ],
-            ['attribute' => 'perfil',
-            // 'value' => function($perfil){ if($perfil === 'Administrador'){return 'Femenino';}else{return 'Masculino';}},
-            'filter' => ['Administrador' => 'Administrador', 'Jugador' => 'Jugador'],
-            ],
+            // 'telefono',
+            // 'correo',
 
-            ['class' => 'yii\grid\ActionColumn'],
+             [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['hidden' => ''],
+                'headerOptions' => ['hidden' => ''],
+                'filterOptions' => ['hidden' => ''],
+            ],
         ],
     ]); ?>
 

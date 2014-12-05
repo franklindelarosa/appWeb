@@ -1,3 +1,9 @@
+<script type="text/javascript">
+    $(document).ready(function() {        
+        linkView();
+    });
+
+</script>
 <?php
 
 use yii\helpers\Html;
@@ -22,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => ['class' => 'text-center'],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
 
@@ -31,18 +38,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => yii\jui\DatePicker::widget(["name" => "Partidos[fecha]", "dateFormat" => "yyyy-MM-dd", 'options' => ['class' => 'form-control']]),
             ],
             'hora',
-            'costo',
-            'venta',
+            // 'costo',
+            [
+                'attribute' => 'costo',
+                'value' => function($data){ return "$ ".number_format($data->costo,0);}
+            ],
+            [
+                'attribute' => 'venta',
+                'value' => function($data){ return "$ ".number_format($data->venta,0);}
+            ],
             // 'estado',
             [
                 'attribute' => 'estado',
-                'value' => function($valor){if($valor === '1'){
+                'value' => function($valor){if($valor->estado === '1'){
                                                 return 'Disponible para inscripción';}
                                                 else{
-                                                    if($valor === '2'){
+                                                    if($valor->estado === '2'){
                                                         return 'No disponible para inscripción';}
                                                     else{
-                                                        if($valor === '3'){
+                                                        if($valor->estado === '3'){
                                                             return 'Cancelado';}
                                                     }
                                                 }
@@ -50,8 +64,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => ['1' => 'Disponible', '2' => 'No disponible', '3' => 'Cancelado'],
             ],
             // 'id_cancha',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['hidden' => ''],
+                'headerOptions' => ['hidden' => ''],
+                'filterOptions' => ['hidden' => ''],
+            ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            // ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 

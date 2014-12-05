@@ -28,7 +28,7 @@ AppAsset::register($this);
         
         <?php
             NavBar::begin([
-                'brandLabel' => '<a class="navbar-brand" href="'.Yii::$app->homeUrl.'"><img alt="Brand" src="'.Yii::$app->request->baseUrl.'/images/icono.png">&nbspFutbol Cracks</a>',
+                'brandLabel' => '<a class="navbar-brand" href="'.Yii::$app->homeUrl.'"><img alt="Brand" src="'.Yii::$app->request->baseUrl.'/images/icono.png">&nbspFútbol Cracks</a>',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -41,32 +41,32 @@ AppAsset::register($this);
                     ['label' => ''] :
                     ['label' => 'Canchas',
                         'items' => [
-                            ['label' => 'Listado de canchas', 'url' => ['/canchas/index']],
-                            ['label' => 'Registrar cancha', 'url' => ['/canchas/create']],
+                            ['label' => 'Crear cancha', 'url' => ['/canchas/create']],
+                            ['label' => 'Listar canchas', 'url' => ['/canchas/index']],
                         ],
                     ],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
                     ['label' => 'Partidos',
                         'items' => [
-                            ['label' => 'Listado de partidos', 'url' => ['/partidos/index']],
-                            ['label' => 'Registrar partido', 'url' => ['/partidos/create']],
+                            ['label' => 'Crear partido', 'url' => ['/partidos/create']],
+                            ['label' => 'Listar partidos', 'url' => ['/partidos/index']],
                         ],
                     ],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
                     ['label' => 'Usuarios',
                         'items' => [
-                            ['label' => 'Listado de usuarios', 'url' => ['/usuarios/index']],
-                            ['label' => 'Registrar usuario', 'url' => ['/usuarios/create']],
+                            ['label' => 'Crear usuario', 'url' => ['/usuarios/create']],
+                            ['label' => 'Listar usuarios', 'url' => ['/usuarios/index']],
                         ],
                     ],
                     Yii::$app->user->isGuest ?
                     ['label' => ''] :
                     ['label' => 'Estados',
                         'items' => [
-                            ['label' => 'Listado de estados', 'url' => ['/estados/index']],
-                            ['label' => 'Registrar estado', 'url' => ['/estados/create']],
+                            ['label' => 'Crear estado', 'url' => ['/estados/create']],
+                            ['label' => 'Listar estados', 'url' => ['/estados/index']],
                         ],
                     ],
                     Yii::$app->user->isGuest ?

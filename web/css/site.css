@@ -3,8 +3,44 @@ body {
     height: 100%;
     background-image: url(../images/Football-grass-background.jpg);
     background-size: cover;
+    font-size: 1.0em;
 }
 
+th{
+    text-align: center;
+}
+
+a.botones{
+    color: inherit;
+    display: block;
+    text-decoration: none;    
+}
+
+ul.breadcrumb{
+    background-color: rgba(255,255,255,0.9);
+}
+
+img.img-botones{
+    max-width: 100%;
+    height: auto;
+}
+
+div.contenedor-btn:active{
+    box-shadow: 0px 0px 15px white;
+}
+
+div.contenedor-btn:hover{
+    background-color: rgba(255,255,255,0.6);
+}
+
+div.contenedor-btn{
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 20px;
+}
+
+ul.navbar-nav.navbar-right.nav{
+    font-size: 13px;
+}
 
 a, tr, p img{
     cursor: pointer;

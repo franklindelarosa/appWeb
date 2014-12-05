@@ -57,6 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'direccion',
             'telefono',
             'cupo_max',
+            'estado',
         ],
     ]) ?>
 

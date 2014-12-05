@@ -6,20 +6,20 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Partidos */
 
-$this->title = $model->id_partido;
+$this->title = "Partido: #".$model->id_partido;
 $this->params['breadcrumbs'][] = ['label' => 'Partidos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="partidos-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <p class="btn-right"><a href="<?= Yii::$app->request->baseUrl; ?>/partidos/index" class="btn btn-default">Volver</a></p>
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_partido], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_partido], [
+        <?= Html::a('Actualizar', ['update', 'id' => $model->id_partido], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->id_partido], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Está seguro que desea eliminar este item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,13 +28,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_partido',
+            // 'id_partido',
             'fecha',
             'hora',
-            'costo',
-            'venta',
+            // 'costo',
+
+            // 'venta',
+            [
+                'attribute' => 'costo',
+                'value' => "$ ".number_format($model->costo,0)
+            ],
+            [
+                'attribute' => 'venta',
+                'value' => "$ ".number_format($model->venta,0)
+            ],
             'estado',
             'id_cancha',
+            // 'idCancha',
         ],
     ]) ?>
 

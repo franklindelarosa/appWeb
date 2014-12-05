@@ -1,3 +1,9 @@
+<script type="text/javascript">
+    $(document).ready(function() {        
+        linkView();
+    });
+
+</script>
 <?php
 
 use yii\helpers\Html;
@@ -22,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => ['class' => 'text-center'],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
 
@@ -29,8 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'entidad',
             'descripcion',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['hidden' => ''],
+                'headerOptions' => ['hidden' => ''],
+                'filterOptions' => ['hidden' => ''],
+            ],
 
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 

@@ -44,7 +44,7 @@ use yii\widgets\ActiveForm;
 					<label for="descripcion" class="col-md-3 control-label">Descripción:</label>
 					<div class="col-md-9">
 						<!-- <input type="text" class="form-control" value="<?= $model['descripcion'];?>" name="Estados[descripcion]" placeholder="Descripción" required> -->
-						<textarea name="Estados[descripcion]" class="form-control" rows="1"><?= $model['descripcion'];?></textarea>
+						<textarea name="Estados[descripcion]" placeholder="Descripción" class="form-control" rows="1"><?= $model['descripcion'];?></textarea>
 					</div>
 				</div>
 

@@ -32,16 +32,16 @@ use yii\widgets\ActiveForm;
                 </div>
 
                 <div class="form-group col-md-12">
-                    <label for="nombre" class="col-md-2 control-label">Usuario:</label>
+                    <label for="nombre" class="col-md-2 control-label">Email:</label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control" value="<?= $model['usuario'];?>" name="Usuarios[usuario]" placeholder="Usuario" required>
+                        <input type="text" class="form-control" value="<?= $model['correo'];?>" name="Usuarios[correo]" placeholder="Email" required>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12">
                     <label for="nombre" class="col-md-2 control-label">Contraseña:</label>
                     <div class="col-md-10">
-                        <input type="password" class="form-control" name="Usuarios[contrasena]" placeholder="Contraseña" required>
+                        <input type="password" class="form-control" name="Usuarios[contrasena]" placeholder="Contraseña" <?= $model->isNewRecord ? 'required' : '' ?> >
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@ use yii\widgets\ActiveForm;
 
                 <?php if(!$model->isNewRecord){ ?>
                 <div class="form-group col-md-12 field-usuarios-estado">
-                    <label class="col-md-2 control-label">Estado del partido:</label>
+                    <label class="col-md-2 control-label">Estado del usuario:</label>
                     <div class="col-md-10">
                         <select class="form-control" name="Usuarios[estado]" required id="usuarios-estado">
                             <option value="">Selecciona un estado</option>
@@ -87,16 +87,10 @@ use yii\widgets\ActiveForm;
                 <div class="form-group col-md-12">
                     <label for="nombre" class="col-md-2 control-label">Telefono:</label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control" value="<?= $model['telefono'];?>" name="Usuarios[telefono]" placeholder="Telefono">
+                        <input type="text" class="form-control" value="<?= $model['telefono'];?>" name="Usuarios[telefono]" placeholder="Telefono" required>
                     </div>
                 </div>
 
-                <div class="form-group col-md-12">
-                    <label for="nombre" class="col-md-2 control-label">Email:</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" value="<?= $model['correo'];?>" name="Usuarios[correo]" placeholder="Email">
-                    </div>
-                </div>
 
                 <div class= "col-md-12">
                     <div class="form-group col-md-6 text-center">

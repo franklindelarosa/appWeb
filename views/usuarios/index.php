@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p class="btn-right">
-        <?= Html::a('Crear Usuarios', ['create'], ['class' => 'btn btn-success  btn-lg']) ?>
+        <?= Html::a('Crear Usuarios', ['create'], ['class' => 'btn btn-success btn-lg']) ?>
     </p>
 
     <?= GridView::widget([
@@ -27,15 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
             // 'id_usuario',
             'nombre',
-            'usuario',
+            // 'usuario',
+            'correo',
+            'telefono',
             // 'contrasena',
             // 'sexo',
             ['attribute' => 'sexo',
             'value' => function($sexo){ if($sexo === 'f'){return 'Femenino';}else{return 'Masculino';}},
             'filter' => ['m' => 'Masculino', 'f' => 'Femenino'],
             ],
-            // 'telefono',
-            // 'correo',
+            ['attribute' => 'perfil',
+            // 'value' => function($perfil){ if($perfil === 'Administrador'){return 'Femenino';}else{return 'Masculino';}},
+            'filter' => ['Administrador' => 'Administrador', 'Jugador' => 'Jugador'],
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

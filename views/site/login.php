@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = 'Ingresar';
 					<div class="form-group">
                         <div class="checkbox col-md-10 col-md-offset-1">
 							<label>
-								<input type="checkbox" name="LoginForm[rememberMe]" value="remember-me"> Recordarme?
+								<input type="checkbox" name="LoginForm[rememberMe]"> Recordarme?
 							</label>
 						</div>
 					</div>

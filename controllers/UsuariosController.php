@@ -84,6 +84,7 @@ class UsuariosController extends Controller
             if($model->perfil === '' || $model->perfil === NULL){
                 $model->perfil = 'Jugador';
             }
+            $model->usuario = $model->correo;
             if($model->save()){
                 $role = Yii::$app->authManager->getRole($model->perfil);
                 Yii::$app->authManager->assign($role, $model->id_usuario);
@@ -118,8 +119,9 @@ class UsuariosController extends Controller
                     Yii::$app->authManager->revokeAll($id);
                     Yii::$app->authManager->assign($role, $id);
                 }
+                $model->usuario = $model->correo;
                 if($model->save())
-                     return $this->redirect(['view', 'id' => $model->id_usuario]);
+                    return $this->redirect(['view', 'id' => $model->id_usuario]);
             } else {
                 $query = new Query;
                 $roles = $query->select('name')->from('items')->all();

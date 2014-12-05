@@ -18,8 +18,8 @@ class UsuariosSearch extends Usuarios
     public function rules()
     {
         return [
-            [['id_usuario'], 'integer'],
-            [['nombre', 'usuario', 'contrasena', 'sexo', 'telefono', 'correo'], 'safe'],
+            [['id_usuario', 'estado'], 'integer'],
+            [['nombre', 'usuario', 'contrasena', 'sexo', 'perfil', 'telefono', 'correo'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class UsuariosSearch extends Usuarios
      */
     public function search($params)
     {
-        $query = Usuarios::find();
+        $query = Usuarios::find()->where('id_usuario <> '.Yii::$app->user->id);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -53,12 +53,14 @@ class UsuariosSearch extends Usuarios
 
         $query->andFilterWhere([
             'id_usuario' => $this->id_usuario,
+            'estado' => $this->estado,
         ]);
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre])
             ->andFilterWhere(['like', 'usuario', $this->usuario])
             ->andFilterWhere(['like', 'contrasena', $this->contrasena])
             ->andFilterWhere(['like', 'sexo', $this->sexo])
+            ->andFilterWhere(['like', 'perfil', $this->perfil])
             ->andFilterWhere(['like', 'telefono', $this->telefono])
             ->andFilterWhere(['like', 'correo', $this->correo]);
 

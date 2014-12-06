@@ -14,6 +14,8 @@
         $('#cuerpoModal').on('click','td', function(event) {
             event.preventDefault();
             $('.helper2').val(partido);
+            $('#cuerpoModal td').removeClass('currentPlayer');
+            $(this).addClass('currentPlayer');
             var celda = $(this);
             var data = celda.attr('data-id');
             if(data!=null){
@@ -23,8 +25,6 @@
                 });
             }else{
                 $('.helper').val(celda.attr('data-equipo'));
-                $('#cuerpoModal td').removeClass('currentPlayer');
-                $(this).addClass('currentPlayer');
                 $('#invitacionModal').modal({backdrop:'static'});
             }
         });
@@ -37,6 +37,19 @@
         $('#btnInvitado').on('click', function(event) {
             event.preventDefault();
             generarInvitacion('registrarinvitado', $('#form-invitado').serialize());
+        });
+
+        $('#btnSacar').on('click', function(event) {
+            event.preventDefault();
+            var current = $('#cuerpoModal td.currentPlayer');
+            $.post('sacarjugador', {jugador: current.attr('data-id'), entidad: current.attr('data-entidad'), equipo: current.attr('data-equipo'), partido: partido}).done(function(data){
+                if(data['mensaje'] == 'ok'){
+                    current.html('Invitar');
+                    current.attr({"style": "color:blue"});
+                    current.removeAttr('data-id');
+                    current.removeAttr('data-entidad');
+                }
+            });
         });
 
         $('#equiposModal').on('hidden.bs.modal', function(event) {
@@ -69,12 +82,14 @@
 
     function generarInvitacion(action, data){
         $.post(action, {data: data}).done(function(data){
-            $('#cuerpoModal td.currentPlayer').html(data['nombre']);
-            $('#cuerpoModal td.currentPlayer').attr({
-                "style": 'color:green',
-                "data-id": data['id'],
-                "data-entidad": data['entidad']
-            });
+            if(data['mensaje'] == 'ok'){
+                $('#cuerpoModal td.currentPlayer').html(data['nombre']);
+                $('#cuerpoModal td.currentPlayer').attr({
+                    "style": 'color:green',
+                    "data-id": data['id'],
+                    "data-entidad": data['entidad']
+                });
+            }
         });
     }
 
@@ -194,9 +209,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="modal-body">
                 <table id="infoUsuario" class="table table-striped table-bordered table-hover">
                 </table>
+                <button id="btnSacar" data-dismiss="modal" class="btn btn-danger col-sm-offset-3">Sacar del partido</button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

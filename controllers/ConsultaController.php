@@ -64,6 +64,24 @@ class ConsultaController extends Controller
             return $result;
         }
     }
+
+    public function actionSacarjugador(){
+        if(Yii::$app->request->post() && isset($_POST['jugador']) && isset($_POST['entidad']) && isset($_POST['equipo']) && isset($_POST['partido'])){
+            if($_POST['entidad'] === 'usuario'){
+                $sql = "DELETE FROM usuarios_partidos WHERE id_partido = ".$_POST['partido']." AND id_usuario = ".$_POST['jugador'];
+                \Yii::$app->db->createCommand($sql)->execute();
+            }else{
+                $sql = "DELETE FROM invitaciones WHERE id_partido = ".$_POST['partido']." AND id_invitado = ".$_POST['jugador'];
+                \Yii::$app->db->createCommand($sql)->execute();
+            }
+            $sql = "UPDATE partidos SET ".strtolower($_POST['equipo'])."s = (".strtolower($_POST['equipo'])."s-1) WHERE id_partido = ".$_POST['partido'];
+            \Yii::$app->db->createCommand($sql)->execute();
+            $result['mensaje'] = 'ok';
+        }else{$result['mensaje'] = 'bad';}
+        \Yii::$app->response->format = 'json';
+        return $result;
+    }
+
     public function actionRegistrarinvitado(){
         if(Yii::$app->request->post() && isset($_POST['data'])){
             parse_str($_POST['data'], $data);
@@ -80,6 +98,7 @@ class ConsultaController extends Controller
                     \Yii::$app->db->createCommand($sql)->execute();
                     $sql = "UPDATE partidos SET ".strtolower($data['equipo'])."s = (".strtolower($data['equipo'])."s+1) WHERE id_partido = ".$data['partido'];
                     \Yii::$app->db->createCommand($sql)->execute();
+                    $result['mensaje'] = 'ok';
                 }
                 $result['entidad'] = 'usuario';
                 $result['id'] = $usuario->id_usuario;
@@ -94,6 +113,7 @@ class ConsultaController extends Controller
                     \Yii::$app->db->createCommand($sql)->execute();
                     $sql = "UPDATE partidos SET ".strtolower($data['equipo'])."s = (".strtolower($data['equipo'])."s+1) WHERE id_partido = ".$data['partido'];
                     \Yii::$app->db->createCommand($sql)->execute();
+                    $result['mensaje'] = 'ok';
                 }
                 $result['entidad'] = 'invitado';
                 $result['id'] = $invitado->id_invitado;

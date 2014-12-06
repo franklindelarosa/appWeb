@@ -4,46 +4,39 @@
         $('#tablaConsulta tr.partido').on('click', function(event) {
             event.preventDefault();
             partido = $(this).attr('data-key');
-            $('#helper2').val(partido);
             $.post('equipos', {id: partido}).done(function(data) {
                 generarTabla(data[0],'equipoBlanco','Blanco',(data[2][0]['max']/2)-(data[0][0].length+data[0][1].length));
                 generarTabla(data[1],'equipoNegro','Negro',(data[2][0]['max']/2)-(data[1][0].length+data[1][1].length));
                 $('#equiposModal').modal({backdrop:'static'});
-                // console.log(data);
             });
         });
 
         $('#cuerpoModal').on('click','td', function(event) {
             event.preventDefault();
+            $('.helper2').val(partido);
             var celda = $(this);
             var data = celda.attr('data-id');
             if(data!=null){
                 $.post(celda.attr('data-entidad'), {id: data}).done(function(data) {
                     generarTablaUsuario(data);
                     $('#usuarioModal').modal();
-                    // console.log(data);
                 });
             }else{
-                $('#helper').val(celda.attr('data-equipo'));
+                $('.helper').val(celda.attr('data-equipo'));
                 $('#cuerpoModal td').removeClass('currentPlayer');
                 $(this).addClass('currentPlayer');
                 $('#invitacionModal').modal({backdrop:'static'});
-                // alert('Seleccione un usuario válido')
             }
+        });
+
+        $('#btnRegistrado').on('click', function(event) {
+            event.preventDefault();
+            generarInvitacion('registrarregistrado', $('#form-registrado').serialize());
         });
 
         $('#btnInvitado').on('click', function(event) {
             event.preventDefault();
-            $.post('registrarinvitado', {data: $('#form-invitado').serialize()}).done(function(data){
-                // alert($('#form-invitado').serialize());
-                $('#cuerpoModal td.currentPlayer').html($('input[name="nombre"]').val());
-                $('#cuerpoModal td.currentPlayer').attr({
-                    "style": 'color:green',
-                    "data-id": data['id'],
-                    "data-entidad": data['entidad']
-                });
-                $('#form-invitado')[0].reset();
-            });
+            generarInvitacion('registrarinvitado', $('#form-invitado').serialize());
         });
 
         $('#equiposModal').on('hidden.bs.modal', function(event) {
@@ -53,6 +46,12 @@
 
         $('#usuarioModal').on('hidden.bs.modal', function(event) {
             $('#infoUsuario').empty();
+        });
+
+        $('#invitacionModal').on('hidden.bs.modal', function(event) {
+            $('#form-registrado')[0].reset();
+            $('#form-invitado')[0].reset();
+            $('.selectpicker').selectpicker('refresh');
         });
 
         $(document).ajaxStart(function() {
@@ -67,6 +66,17 @@
         });
 
     });
+
+    function generarInvitacion(action, data){
+        $.post(action, {data: data}).done(function(data){
+            $('#cuerpoModal td.currentPlayer').html(data['nombre']);
+            $('#cuerpoModal td.currentPlayer').attr({
+                "style": 'color:green',
+                "data-id": data['id'],
+                "data-entidad": data['entidad']
+            });
+        });
+    }
 
     function generarTabla(data,tabla,equipo,n){
         $('#'+tabla).empty();
@@ -211,7 +221,25 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                             <div class="panel-body">
-                                TBD!
+                                <form id="form-registrado" method="post" role="form">
+                                        
+                                        <div class="form-group col-md-12">
+                                            <label for="usuario" class="col-md-2 control-label">Usuario:</label>
+                                            <div class="col-md-10">
+                                                <select name="usuario" data-live-search="true" data-width="100%" class="selectpicker" required>
+                                                    <option value="">Selecciona a un usuario</option>
+                                                    <?php foreach($usuarios as $row){?>
+                                                        <option value="<?= $row['id_usuario'];?>"><?= $row['correo'];?></option>
+                                                    <?php }?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <input hidden class="helper" type="text" name="equipo" required>
+                                        <input hidden class="helper2" type="text" name="partido" required>
+                                        <div class="form-group col-md-7 col-md-offset-4">
+                                            <button id="btnRegistrado" type="submit" data-dismiss="modal" class="btn btn-success">Añadir jugador</button>
+                                        </div>
+                                    </form>
                             </div>
                         </div>
                     </div>
@@ -225,7 +253,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                 <div class="panel-body">
-                                    <form id="form-invitado" action="registrarinvitado" method="post" role="form">
+                                    <form id="form-invitado" method="post" role="form">
                                         <div class="form-group col-md-12">
                                             <label for="nombre" class="col-md-3 control-label">Nombre:</label>
                                             <div class="col-md-9">
@@ -254,8 +282,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <input type="text" class="form-control" name="telefono" placeholder="Teléfono" required>
                                             </div>
                                         </div>
-                                        <input hidden id="helper" type="text" name="equipo" required>
-                                        <input hidden id="helper2" type="text" name="partido" required>
+                                        <input hidden class="helper" type="text" name="equipo" required>
+                                        <input hidden class="helper2" type="text" name="partido" required>
                                         <div class="form-group">
                                             <div class="checkbox col-md-10 col-md-offset-1">
                                                 <label>
@@ -264,7 +292,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </div>
                                         </div>
                                         <div class="form-group col-md-7 col-md-offset-4">
-                                            <button id="btnInvitado" type="submit" data-dismiss="modal" class="btn btn-success">Invitar jugador</button>
+                                            <button id="btnInvitado" type="submit" data-dismiss="modal" class="btn btn-success">Añadir invitado</button>
                                         </div>
                                     </form>
                                 </div>

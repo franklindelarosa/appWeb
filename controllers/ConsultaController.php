@@ -39,13 +39,31 @@ class ConsultaController extends Controller
     {
     	$searchModel = new ConsultaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query = new Query;
+        $usuarios = $query->select('*')->from('usuarios')->where('estado = "4"')->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'usuarios' => $usuarios,
         ]);
     }
 
+    public function actionRegistrarregistrado(){
+        if(Yii::$app->request->post() && isset($_POST['data'])){
+            parse_str($_POST['data'], $data);
+            $user = Usuarios::findOne($data['usuario']);
+            $sql = "INSERT INTO usuarios_partidos (id_usuario, id_partido, equipo) VALUES ('".$data['usuario']."', '".$data['partido']."', '".strtolower(substr($data['equipo'],0,1))."')";
+            \Yii::$app->db->createCommand($sql)->execute();
+            $sql = "UPDATE partidos SET ".strtolower($data['equipo'])."s = (".strtolower($data['equipo'])."s+1) WHERE id_partido = ".$data['partido'];
+            \Yii::$app->db->createCommand($sql)->execute();
+            $result['entidad'] = 'usuario';
+            $result['id'] = $data['usuario'];
+            $result['nombre'] = $user->nombre;
+            \Yii::$app->response->format = 'json';
+            return $result;
+        }
+    }
     public function actionRegistrarinvitado(){
         if(Yii::$app->request->post() && isset($_POST['data'])){
             parse_str($_POST['data'], $data);
@@ -60,6 +78,8 @@ class ConsultaController extends Controller
                 if($usuario->save()){
                     $sql = "INSERT INTO usuarios_partidos (id_usuario, id_partido, equipo) VALUES ('".$usuario->id_usuario."', '".$data['partido']."', '".strtolower(substr($data['equipo'],0,1))."')";
                     \Yii::$app->db->createCommand($sql)->execute();
+                    $sql = "UPDATE partidos SET ".strtolower($data['equipo'])."s = (".strtolower($data['equipo'])."s+1) WHERE id_partido = ".$data['partido'];
+                    \Yii::$app->db->createCommand($sql)->execute();
                 }
                 $result['entidad'] = 'usuario';
                 $result['id'] = $usuario->id_usuario;
@@ -70,16 +90,20 @@ class ConsultaController extends Controller
                 $invitado->sexo = $data['sexo'];
                 $invitado->telefono = $data['telefono'];
                 if($invitado->save()){
-                    $sql = "INSERT INTO invitaciones (id_usuario, id_invitado, equipo) VALUES ('".Yii::$app->user->id."', '".$invitado->id_invitado."', '".strtolower(substr($data['equipo'],0,1))."')";
+                    $sql = "INSERT INTO invitaciones (id_usuario, id_invitado, equipo, id_partido) VALUES ('".Yii::$app->user->id."', '".$invitado->id_invitado."', '".strtolower(substr($data['equipo'],0,1))."', '".$data['partido']."')";
+                    \Yii::$app->db->createCommand($sql)->execute();
+                    $sql = "UPDATE partidos SET ".strtolower($data['equipo'])."s = (".strtolower($data['equipo'])."s+1) WHERE id_partido = ".$data['partido'];
                     \Yii::$app->db->createCommand($sql)->execute();
                 }
                 $result['entidad'] = 'invitado';
                 $result['id'] = $invitado->id_invitado;
             }
+            $result['nombre'] = $data['nombre'];
+            \Yii::$app->response->format = 'json';
+            return $result;
         }
-        \Yii::$app->response->format = 'json';
-        return $result;
     }
+
     public function actionEquipos(){
     	$sql = "CALL jugadoresEquipo('b',".$_POST['id'].")";
         $equipos[0][0] = \Yii::$app->db->createCommand($sql)->queryAll();

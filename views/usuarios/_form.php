@@ -92,13 +92,8 @@ use yii\widgets\ActiveForm;
                 </div>
 
 
-                <div class= "col-md-12">
-                    <div class="form-group col-md-6 text-center">
-                        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']) ?>
-                    </div>
-                    <div class="form-group col-md-6 text-center">
-                        <a href="<?= Yii::$app->request->baseUrl; ?>/usuarios/index" class="btn btn-primary">Volver</a>
-                    </div>
+                <div class= "form-group col-md-12 text-center">
+                        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => 'btn btn-primary']) ?>
                 </div>
 
                 <?php ActiveForm::end(); ?>

@@ -149,7 +149,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'id' => 'tablaConsulta',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'rowOptions' => ['class' => 'partido'],
+        'rowOptions' => ['class' => 'partido text-center'],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
 

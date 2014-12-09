@@ -10,7 +10,7 @@ $this->title = 'Crear Partido';
 $this->params['breadcrumbs'][] = ['label' => 'Partidos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<p class="btn-right"><a href="<?= Yii::$app->request->baseUrl; ?>/partidos/index" class="btn btn-lg btn-success">Ver tabla de partidos</a></p>
+<p class="btn-right"><a href="<?= Yii::$app->request->baseUrl; ?>/partidos/index" class="btn btn-lg btn-success">Listar partidos</a></p>
 <div class="partidos-create">
 
     <h1><?= Html::encode($this->title) ?></h1>

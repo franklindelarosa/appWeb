@@ -65,13 +65,8 @@ use kartik\widgets\FileInput;
                         </div>
                     </div>
 
-                    <div class= "col-md-12">
-                        <div class="form-group col-md-6 text-center">
-                            <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => 'btn btn-success']) ?>
-                        </div>
-                        <div class="form-group col-md-6 text-center">
-                            <a href="index" class="btn btn-primary">Volver</a>
-                        </div>
+                    <div class= "form-group col-md-12 text-center">
+                            <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => 'btn btn-primary']) ?>
                     </div>
                     <?php ActiveForm::end(); ?>
 				</div>

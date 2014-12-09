@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    $(document).ready(function() {        
+    $(document).ready(function() {
        linkView();
     });
 </script>
@@ -42,7 +42,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'direccion',
             'telefono',
             'cupo_max',
-            // 'estado',
+            [
+                'attribute' => 'estado',
+                'value' => function($valor){
+                    switch ($valor->estado) {
+                        case '6':
+                            return 'Activa';
+                            break;
+                        case '7':
+                            return 'Inactiva';
+                            break;
+                    }
+            },
+                'filter' => ['6' => 'Activa', '7' => 'Inactiva'],
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => ['hidden' => ''],

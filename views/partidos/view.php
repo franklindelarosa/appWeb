@@ -42,8 +42,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'venta',
                 'value' => "$ ".number_format($model->venta,0)
             ],
-            'estado',
-            'id_cancha',
+            [
+                'attribute' => 'estado',
+                'value' => $model->nameEstado(),
+            ],
+            // 'id_cancha',
+            [
+                'attribute' => 'id_cancha',
+                'value' => $model->nameCancha(),
+            ],
             // 'idCancha',
         ],
     ]) ?>

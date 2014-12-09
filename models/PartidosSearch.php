@@ -12,7 +12,6 @@ use app\models\Partidos;
  */
 class PartidosSearch extends Partidos
 {
-    public $canchaName;
     /**
      * @inheritdoc
      */
@@ -22,7 +21,6 @@ class PartidosSearch extends Partidos
             [['id_partido', 'estado', 'blancos', 'negros', 'id_cancha'], 'integer'],
             [['fecha', 'hora'], 'safe'],
             [['costo', 'venta'], 'number'],
-            [['canchaName'], 'safe'],
         ];
     }
 
@@ -51,7 +49,6 @@ class PartidosSearch extends Partidos
         ]);
 
         if (!($this->load($params) && $this->validate())) {
-            $query->joinWith(['idCancha']);
             return $dataProvider;
         }
 
@@ -62,14 +59,10 @@ class PartidosSearch extends Partidos
             'costo' => $this->costo,
             'venta' => $this->venta,
             'estado' => $this->estado,
-            'blancos' => $this->blancos, 
-            'negros' => $this->negros, 
+            'blancos' => $this->blancos,
+            'negros' => $this->negros,
             'id_cancha' => $this->id_cancha,
         ]);
-
-        $query->joinWith(['idCancha' => function ($q) {
-            $q->where('canchas.nombre LIKE "%' . $this->canchaName . '%"');
-        }]);
 
         return $dataProvider;
     }

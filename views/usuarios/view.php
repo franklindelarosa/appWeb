@@ -36,6 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'sexo', 'value' => $model->sexo === 'f' ? 'Femenino' : 'Masculino'],
             'telefono',
             'correo',
+            [
+                'attribute' => 'estado',
+                'value' => $model->idEstado->nombre,
+            ],
         ],
     ]) ?>
 

@@ -63,7 +63,7 @@ class Canchas extends \yii\db\ActiveRecord
         return $this->hasMany(Partidos::className(), ['id_cancha' => 'id_cancha']);
     }
 
-    public function getEstado()
+    public function getIdEstado()
     {
         return $this->hasOne(Estados::className(), ['id_estado' => 'estado']);
     }

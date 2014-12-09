@@ -75,7 +75,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return $this->hasMany(Invitaciones::className(), ['id_usuario' => 'id_usuario']);
     }
 
-    public function getEstado()
+    public function getIdEstado()
     {
         return $this->hasOne(Estados::className(), ['id_estado' => 'estado']);
     }

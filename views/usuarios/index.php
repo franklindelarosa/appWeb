@@ -41,8 +41,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'value' => function($sexo){ if($sexo === 'f'){return 'Femenino';}else{return 'Masculino';}},
             'filter' => ['m' => 'Masculino', 'f' => 'Femenino'],
             ],
-            // 'telefono',
-            // 'correo',
+            'telefono',
+            'correo',
+            [
+                'attribute' => 'estado',
+                'value' => function($valor){
+                    switch ($valor->estado) {
+                        case '4':
+                            return 'Activo';
+                            break;
+                        case '5':
+                            return 'Inactivo';
+                            break;
+                    }
+            },
+                'filter' => ['4' => 'Activo', '5' => 'Inactivo'],
+            ],
 
              [
                 'class' => 'yii\grid\ActionColumn',

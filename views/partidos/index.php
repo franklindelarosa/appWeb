@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p class="btn-right">
-        <?= Html::a('Crear Partido', ['create'], ['class' => 'btn btn-success  btn-lg']) ?>
+        <?= Html::a('Crear Partido', ['create'], ['class' => 'btn btn-success btn-lg']) ?>
     </p>
 
     <?= GridView::widget([
@@ -50,17 +50,19 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'estado',
             [
                 'attribute' => 'estado',
-                'value' => function($valor){if($valor->estado === '1'){
-                                                return 'Disponible para inscripción';}
-                                                else{
-                                                    if($valor->estado === '2'){
-                                                        return 'No disponible para inscripción';}
-                                                    else{
-                                                        if($valor->estado === '3'){
-                                                            return 'Cancelado';}
-                                                    }
-                                                }
-                                            },
+                'value' => function($valor){
+                    switch ($valor->estado) {
+                        case '1':
+                            return 'Disponible';
+                            break;
+                        case '2':
+                            return 'No disponible';
+                            break;
+                        case '3':
+                            return 'Cancelado';
+                            break;
+                    }
+            },
                 'filter' => ['1' => 'Disponible', '2' => 'No disponible', '3' => 'Cancelado'],
             ],
             // 'id_cancha',

@@ -2,7 +2,7 @@
 use yii\bootstrap\ActiveForm;
 $this->params['breadcrumbs'][] = 'Ingresar';
 ?>
-<div class="row">
+<div class="row" style="padding:5% 0">
 	<div class="col-md-6 col-md-offset-3 ">
 		<div class="panel panel-primary">
 			<div class="panel-body">
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = 'Ingresar';
 					<div class="form-group">
                         <div class="checkbox col-md-10 col-md-offset-1">
 							<label>
-								<input type="checkbox" name="LoginForm[rememberMe]"> Recordarme?
+								<input type="checkbox" name="LoginForm[rememberMe]" value="remember-me"> Recordarme?
 							</label>
 						</div>
 					</div>

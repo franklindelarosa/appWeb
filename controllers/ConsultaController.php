@@ -60,6 +60,7 @@ class ConsultaController extends Controller
             $result['entidad'] = 'usuario';
             $result['id'] = $data['usuario'];
             $result['nombre'] = $user->nombre;
+            $result['mensaje'] = 'ok';
             \Yii::$app->response->format = 'json';
             return $result;
         }

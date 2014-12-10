@@ -20,7 +20,7 @@ class ConsultaSearch extends Consulta
     {
         return [
             [['id'], 'integer'],
-            [['Fecha', 'Hora', 'Cancha', 'Direccion', 'Telefono', 'Cupo', 'Total', 'Blancos', 'Negros'], 'safe'],
+            [['Fecha', 'Hora', 'Cancha', 'Direccion', 'Telefono', 'Cupo', 'Total', 'Blancos', 'Negros','Estado'], 'safe'],
         ];
     }
 
@@ -43,7 +43,7 @@ class ConsultaSearch extends Consulta
     public function search($params)
     {
 
-        $query = Consulta::find()->orderBy(['Fecha' => SORT_DESC, 'Hora' => SORT_DESC]);
+        $query = Consulta::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -68,7 +68,8 @@ class ConsultaSearch extends Consulta
             ->andFilterWhere(['like', 'Cupo', $this->Cupo])
             ->andFilterWhere(['like', 'Total', $this->Total])
             ->andFilterWhere(['like', 'Blancos', $this->Blancos])
-            ->andFilterWhere(['like', 'Negros', $this->Negros]);
+            ->andFilterWhere(['like', 'Negros', $this->Negros])
+            ->andFilterWhere(['like', 'Estado', $this->Estado]);
        
         return $dataProvider;
     }

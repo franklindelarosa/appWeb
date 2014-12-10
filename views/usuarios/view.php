@@ -17,13 +17,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="btn-right"><a href="<?= Yii::$app->request->baseUrl; ?>/usuarios/index" class="btn btn-default">Volver</a></p>
     <p>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id_usuario], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Eliminar', ['delete', 'id' => $model->id_usuario], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Está seguro que desea eliminar este item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+
+        <?php if(Yii::$app->user->id != $model->id_usuario){ ?>
+            <?= Html::a('Eliminar', ['delete', 'id' => $model->id_usuario], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Está seguro que desea eliminar este item?',
+                    'method' => 'post',
+                ],
+            ]) ?>
+        <?php } ?>
     </p>
 
     <?= DetailView::widget([

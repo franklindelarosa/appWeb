@@ -40,6 +40,18 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
 
+            <div class="form-group col-md-12 field-partidos-id_cancha required">
+                <label class="col-md-4 control-label">Cancha:</label>
+                <div class="col-md-8">
+                    <select class="form-control selectpicker" data-live-search="true" data-size="10" name="Partidos[id_cancha]" required id="partidos-id_cancha">
+                        <option value="">Selecciona una cancha</option>
+                        <?php foreach($canchas as $row){?>
+                            <option value="<?= $row['id_cancha'];?>"><?= $row['nombre'];?></option>
+                        <?php }?>
+                    </select>
+                </div>
+            </div>
+
             <div class="form-group col-md-12 field-partidos-costo">
                 <label class="col-md-4 control-label">Costo del partido:</label>
                 <div class="col-md-8 input-group">
@@ -68,17 +80,6 @@ use yii\widgets\ActiveForm;
             </div>
             <?php } ?>
 
-            <div class="form-group col-md-12 field-partidos-id_cancha required">
-                <label class="col-md-4 control-label">Cancha:</label>
-                <div class="col-md-8">
-                    <select class="form-control" name="Partidos[id_cancha]" required id="partidos-id_cancha">
-                        <option value="">Selecciona una cancha</option>
-                        <?php foreach($canchas as $row){?>
-                            <option value="<?= $row['id_cancha'];?>"><?= $row['nombre'];?></option>
-                        <?php }?>
-                    </select>
-                </div>
-            </div>
 
             <div class= "form-group col-md-12 text-center">
                     <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => 'btn btn-primary']) ?>

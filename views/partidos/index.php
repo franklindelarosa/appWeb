@@ -33,9 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
             // ['class' => 'yii\grid\SerialColumn'],
 
             // 'id_partido',
+            // 'fecha',
             [
                 'attribute' => 'fecha',
-                'filter' => yii\jui\DatePicker::widget(["name" => "Partidos[fecha]", "dateFormat" => "yyyy-MM-dd", 'options' => ['class' => 'form-control']]),
+                'filter' => yii\jui\DatePicker::widget(["name" => "PartidosSearch[fecha]", "dateFormat" => "yyyy-MM-dd", 'options' => ['class' => 'form-control']]),
             ],
             'hora',
             // 'costo',

@@ -17,6 +17,7 @@ use Yii;
  * @property string $Total
  * @property integer $Blancos
  * @property integer $Negros
+ * @property integer $Estado
  */
 class Consulta extends \yii\db\ActiveRecord
 {
@@ -34,7 +35,7 @@ class Consulta extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'Cupo', 'Total', 'Blancos', 'Negros'], 'integer'],
+            [['id', 'Cupo', 'Total', 'Blancos', 'Negros', 'Estado'], 'integer'],
             [['Fecha', 'Hora', 'Cancha', 'Direccion', 'Telefono', 'Cupo'], 'required'],
             [['Fecha', 'Hora'], 'safe'],
             [['Cancha', 'Direccion', 'Telefono'], 'string', 'max' => 45]
@@ -62,6 +63,7 @@ class Consulta extends \yii\db\ActiveRecord
             'Total' => 'Total',
             'Blancos' => 'Blancos',
             'Negros' => 'Negros',
+            'Estado' => 'Estado',
         ];
     }
 }

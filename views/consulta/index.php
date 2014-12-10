@@ -1,7 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-        $('#tablaConsulta tr.partido').on('click', function(event) {
+        $(document).on('click', '#tablaConsulta tr.partido',function(event) {
             event.preventDefault();
             partido = $(this).attr('data-key');
             $.post('equipos', {id: partido}).done(function(data) {
@@ -189,6 +189,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'Blancos', 'label' => 'Equipo blanco'],
             // 'Negros',
             ['attribute' => 'Negros', 'label' => 'Equipo negro'],
+            [
+                'headerOptions' => ['width' => '15%'],
+                'attribute' => 'Estado',
+                'value' => function($valor){
+                    switch ($valor->Estado) {
+                        case '1':
+                            return 'Disponible';
+                            break;
+                        case '2':
+                            return 'No disponible';
+                            break;
+                        case '3':
+                            return 'Cancelado';
+                            break;
+                    }
+            },
+                'filter' => ['1' => 'Disponible', '2' => 'No disponible', '3' => 'Cancelado'],
+            ],
 
             // ['class' => 'yii\grid\ActionColumn'],
         ],

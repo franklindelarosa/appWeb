@@ -55,10 +55,18 @@
         $('#equiposModal').on('hidden.bs.modal', function(event) {
             $('#equipoBlanco').empty();
             $('#equipoNegro').empty();
+            $.pjax.reload({container: '#tablaConsulta'});
         });
 
         $('#usuarioModal').on('hidden.bs.modal', function(event) {
             $('#infoUsuario').empty();
+        });
+
+        $('#invitacionModal').on('show.bs.modal', function(event) {
+            console.log(partido);
+            $.post('listadousuarios', {id: partido}).done(function(data){
+                generarListadoUsuarios(data);
+            });
         });
 
         $('#invitacionModal').on('hidden.bs.modal', function(event) {
@@ -118,12 +126,22 @@
         $('#infoUsuario').append('<tr><td class="text-center"> Sexo: '+data['sexo']+'</td></tr>');
         $('#infoUsuario').append('<tr><td class="text-center"> Teléfono: '+data['telefono']+'</td></tr>');
     }
+
+    function generarListadoUsuarios(data){
+        $('#usuario').empty();
+        $('#usuario').append('<option value="">Selecciona a un usuario</option>');
+        $.each(data, function(index, val) {
+            $('#usuario').append('<option value="'+val['id_usuario']+'">'+val['nombre']+'</option>');
+        });
+        $('#usuario').selectpicker('refresh');
+    }
 </script>
 
 <?php
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 
 /* @var $this yii\web\View */
@@ -144,7 +162,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <p class="btn-right"><a class="btn btn-primary btn-lg" href="index">Limpiar filtros</a></p>
 <div class="table-responsive">
-    
+    <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'id' => 'tablaConsulta',
         'dataProvider' => $dataProvider,
@@ -175,6 +193,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    <?php Pjax::end(); ?>
 </div>
 
 </div>
@@ -193,7 +212,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -212,7 +231,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <button id="btnSacar" data-dismiss="modal" class="btn btn-danger col-sm-offset-3">Sacar del partido</button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -242,11 +261,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="form-group col-md-12">
                                             <label for="usuario" class="col-md-2 control-label">Usuario:</label>
                                             <div class="col-md-10">
-                                                <select name="usuario" data-live-search="true" data-width="100%" class="selectpicker" required>
-                                                    <option value="">Selecciona a un usuario</option>
-                                                    <?php foreach($usuarios as $row){?>
-                                                        <option value="<?= $row['id_usuario'];?>"><?= $row['correo'];?></option>
-                                                    <?php }?>
+                                                <select id="usuario" name="usuario" data-live-search="true" data-width="100%" class="selectpicker" required>
+                                                    <!--<?php //foreach($usuarios as $row){?>-->
+                                                        <!-- <option value="<?// $row['id_usuario'];?>"><?// $row['correo'];?></option> -->
+                                                    <!--<?php //}?>-->
                                                 </select>
                                             </div>
                                         </div>
@@ -317,7 +335,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

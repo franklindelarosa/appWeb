@@ -39,13 +39,13 @@ class ConsultaController extends Controller
     {
     	$searchModel = new ConsultaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $query = new Query;
-        $usuarios = $query->select('*')->from('usuarios')->where('estado = "4"')->all();
+        // $query = new Query;
+        // $usuarios = $query->select('*')->from('usuarios')->where('estado = "4"')->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'usuarios' => $usuarios,
+            // 'usuarios' => $usuarios,
         ]);
     }
 
@@ -136,22 +136,29 @@ class ConsultaController extends Controller
         $equipos[1][1] = \Yii::$app->db->createCommand($sql)->queryAll();
         $sql = "SELECT c.cupo_max max FROM canchas c, partidos p WHERE p.id_partido = ".$_POST['id']." AND c.id_cancha = p.id_cancha" ;
         $equipos[2] = \Yii::$app->db->createCommand($sql)->query();
-        // = max(count($equipos[0]),count($equipos[1]));
         \Yii::$app->response->format = 'json';
 
         return $equipos;
     }
 
+    public function actionListadousuarios(){
+        $sql = "SELECT * FROM usuarios_partidos WHERE id_partido = ".$_POST['id'];
+        $total = \Yii::$app->db->createCommand($sql)->query()->getRowCount();
+        ($total > 0) ? $sql = "SELECT DISTINCT id_usuario, nombre FROM usuarios WHERE (id_usuario) NOT IN (SELECT id_usuario FROM usuarios_partidos WHERE id_partido = ".$_POST['id'].")" : $sql = "SELECT id_usuario, correo, nombre FROM usuarios";
+        $equipos = \Yii::$app->db->createCommand($sql)->query();
+        \Yii::$app->response->format = 'json';
+        return $equipos;
+    }
+
     public function actionUsuario(){
-        $sql = "SELECT nombre,usuario,correo,(if(sexo = 'f','Femenino','Masculino')) sexo,telefono FROM usuarios WHERE id_usuario = ".$_POST['id'];
+        $sql = "SELECT nombre, correo, (if(sexo = 'f','Femenino','Masculino')) sexo, telefono FROM usuarios WHERE id_usuario = ".$_POST['id'];
         $user = \Yii::$app->db->createCommand($sql)->queryOne();
         \Yii::$app->response->format = 'json';
-
         return $user;
     }
 
     public function actionInvitado(){
-        $sql = "SELECT nombre,correo,(if(sexo = 'f','Femenino','Masculino')) sexo,telefono FROM invitados WHERE id_invitado = ".$_POST['id'];
+        $sql = "SELECT nombre, correo, (if(sexo = 'f','Femenino','Masculino')) sexo, telefono FROM invitados WHERE id_invitado = ".$_POST['id'];
         $guest = \Yii::$app->db->createCommand($sql)->queryOne();
         \Yii::$app->response->format = 'json';
         return $guest;

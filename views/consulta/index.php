@@ -63,7 +63,6 @@
         });
 
         $('#invitacionModal').on('show.bs.modal', function(event) {
-            console.log(partido);
             $.post('listadousuarios', {id: partido}).done(function(data){
                 generarListadoUsuarios(data);
             });
@@ -85,21 +84,7 @@
         }).ajaxStop(function() {
             $(".loader").hide();
         });
-
     });
-
-    function generarInvitacion(action, data){
-        $.post(action, {data: data}).done(function(data){
-            if(data['mensaje'] == 'ok'){
-                $('#cuerpoModal td.currentPlayer').html(data['nombre']);
-                $('#cuerpoModal td.currentPlayer').attr({
-                    "style": 'color:green',
-                    "data-id": data['id'],
-                    "data-entidad": data['entidad']
-                });
-            }
-        });
-    }
 
     function generarTabla(data,tabla,equipo,n){
         $('#'+tabla).empty();

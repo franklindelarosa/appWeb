@@ -31,12 +31,24 @@
 
         $('#btnRegistrado').on('click', function(event) {
             event.preventDefault();
-            generarInvitacion('registrarregistrado', $('#form-registrado').serialize());
+            if($('#usuario').val() === ''){
+                success('Debes seleccionar un usuario','3');
+            }else{
+                generarInvitacion('registrarregistrado', $('#form-registrado').serialize());
+            }
         });
 
         $('#btnInvitado').on('click', function(event) {
             event.preventDefault();
-            generarInvitacion('registrarinvitado', $('#form-invitado').serialize());
+            var enviar = true;
+            $.each($('.campo'), function(index, val) {
+                if(val.value.trim().length == 0){
+                    success('No puedes dejar campos sin llenar','3');
+                    enviar = false;
+                    return false;
+                }
+            });
+            enviar ? '' : generarInvitacion('registrarinvitado', $('#form-invitado').serialize());
         });
 
         $('#btnSacar').on('click', function(event) {
@@ -119,6 +131,19 @@
             $('#usuario').append('<option value="'+val['id_usuario']+'">'+val['nombre']+'</option>');
         });
         $('#usuario').selectpicker('refresh');
+    }
+
+    function generarInvitacion(action, data){
+        $.post(action, {data: data}).done(function(data){
+            if(data['mensaje'] == 'ok'){
+                $('#cuerpoModal td.currentPlayer').html(data['nombre']);
+                $('#cuerpoModal td.currentPlayer').attr({
+                    "style": 'color:green',
+                    "data-id": data['id'],
+                    "data-entidad": data['entidad']
+                });
+            }
+        });
     }
 </script>
 
@@ -260,23 +285,20 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                             <div class="panel-body">
                                 <form id="form-registrado" method="post" role="form">
-                                        
-                                        <div class="form-group col-md-12">
-                                            <label for="usuario" class="col-md-2 control-label">Usuario:</label>
-                                            <div class="col-md-10">
-                                                <select id="usuario" name="usuario" data-live-search="true" data-width="100%" class="selectpicker" required>
-                                                    <!--<?php //foreach($usuarios as $row){?>-->
-                                                        <!-- <option value="<?// $row['id_usuario'];?>"><?// $row['correo'];?></option> -->
-                                                    <!--<?php //}?>-->
-                                                </select>
-                                            </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="usuario" class="col-md-2 control-label">Usuario:</label>
+                                        <div class="col-md-10">
+                                            <select id="usuario" name="usuario" data-live-search="true" data-width="100%" class="selectpicker" required>
+                                                <option value="">Selecciona a un usuario</option>
+                                            </select>
                                         </div>
-                                        <input hidden class="helper" type="text" name="equipo" required>
-                                        <input hidden class="helper2" type="text" name="partido" required>
-                                        <div class="form-group col-md-7 col-md-offset-4">
-                                            <button id="btnRegistrado" type="submit" data-dismiss="modal" class="btn btn-success">Añadir jugador</button>
-                                        </div>
-                                    </form>
+                                    </div>
+                                    <input hidden class="helper" type="text" name="equipo" required>
+                                    <input hidden class="helper2" type="text" name="partido" required>
+                                    <div class="form-group col-md-7 col-md-offset-4">
+                                        <button id="btnRegistrado" type="submit" data-dismiss="modal" class="btn btn-success">Añadir jugador</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -294,19 +316,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="form-group col-md-12">
                                             <label for="nombre" class="col-md-3 control-label">Nombre:</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="nombre" placeholder="Nombre" required>
+                                                <input type="text" class="form-control campo" name="nombre" placeholder="Nombre" required>
                                             </div>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="correo" class="col-md-3 control-label">Correo:</label>
                                             <div class="col-md-9">
-                                                <input type="email" class="form-control" name="correo" placeholder="Correo electrónico" required>
+                                                <input type="email" class="form-control campo" name="correo" placeholder="Correo electrónico" required>
                                             </div>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="sexo" class="col-md-3 control-label">Sexo:</label>
                                             <div class="col-md-9">
-                                                <select name="sexo" class="form-control" required>
+                                                <select name="sexo" class="form-control campo" required>
                                                     <option value="">Selecciona el sexo</option>
                                                     <option value="m">Masculino</option>
                                                     <option value="f">Femenino</option>
@@ -316,7 +338,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="form-group col-md-12">
                                             <label for="telefono" class="col-md-3 control-label">Teléfono:</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="telefono" placeholder="Teléfono" required>
+                                                <input type="text" class="form-control campo" name="telefono" placeholder="Teléfono" required>
                                             </div>
                                         </div>
                                         <input hidden class="helper" type="text" name="equipo" required>

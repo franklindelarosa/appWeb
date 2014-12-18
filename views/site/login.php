@@ -16,9 +16,9 @@ $this->params['breadcrumbs'][] = 'Ingresar';
 					],
 				]); ?>
 					<div class="form-group field-loginform-username">
-                        <label class="text-left control-label col-md-3" for="LoginForm[username]">Usuario</label>
+                        <label class="text-left control-label col-md-3" for="LoginForm[username]">Correo</label>
                         <div class="col-md-8">
-							<input type="text" name="LoginForm[username]" placeholder="Usuario" class="form-control" required>
+							<input type="text" name="LoginForm[username]" placeholder="Correo electrónico" class="form-control" required>
                         </div>
 					</div>
 					<div class="form-group field-loginform-password">

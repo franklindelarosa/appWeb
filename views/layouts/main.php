@@ -16,6 +16,7 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="<?= Yii::$app->request->baseUrl; ?>/images/favicon.ico" />
     <?= Html::csrfMetaTags() ?>
     <script type="text/javascript" charset="utf8" src="<?= Yii::$app->request->baseUrl; ?>/js/jquery.min.js"></script>
     <title><?= Html::encode($this->title) ?></title>

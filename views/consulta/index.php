@@ -48,18 +48,20 @@
                     return false;
                 }
             });
-            enviar ? '' : generarInvitacion('registrarinvitado', $('#form-invitado').serialize());
+            enviar ? generarInvitacion('registrarinvitado', $('#form-invitado').serialize()) : '';
         });
 
         $('#btnSacar').on('click', function(event) {
             event.preventDefault();
+            var invitados = $('#cuerpoModal td[data-entidad = "invitado"]');
             var current = $('#cuerpoModal td.currentPlayer');
             $.post('sacarjugador', {jugador: current.attr('data-id'), entidad: current.attr('data-entidad'), equipo: current.attr('data-equipo'), partido: partido}).done(function(data){
-                if(data['mensaje'] == 'ok'){
-                    current.html('Invitar');
-                    current.attr({"style": "color:blue"});
-                    current.removeAttr('data-id');
-                    current.removeAttr('data-entidad');
+                if(data['mensaje'] === 'ok'){
+                    restaurarCelda(current);
+                    $.each(data['invitados'], function(index, val) {
+                        celda = $('#cuerpoModal td[data-id = "'+val['id_invitado']+'"]');
+                        restaurarCelda(celda);
+                    });
                 }
             });
         });
@@ -115,6 +117,14 @@
         };
     }
 
+    function restaurarCelda(celda){
+        celda.html('Invitar');
+        celda.attr({"style": "color:blue"});
+        celda.removeAttr('data-id');
+        celda.removeAttr('data-equipo');
+        celda.removeAttr('data-entidad');
+    }
+
     function generarTablaUsuario(data){
         $('#infoUsuario').empty();
         $('#infoUsuario').append('<tr><th class="text-center"> Datos del jugador </th></tr>');
@@ -135,7 +145,7 @@
 
     function generarInvitacion(action, data){
         $.post(action, {data: data}).done(function(data){
-            if(data['mensaje'] == 'ok'){
+            if(data['mensaje'] === 'ok'){
                 $('#cuerpoModal td.currentPlayer').html(data['nombre']);
                 $('#cuerpoModal td.currentPlayer').attr({
                     "style": 'color:green',
@@ -314,9 +324,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="panel-body">
                                     <form id="form-invitado" method="post" role="form">
                                         <div class="form-group col-md-12">
-                                            <label for="nombre" class="col-md-3 control-label">Nombre:</label>
+                                            <label for="nombre" class="col-md-3 control-label">Nombre(s):</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control campo" name="nombre" placeholder="Nombre" required>
+                                                <input type="text" class="form-control campo" name="nombres" placeholder="Nombre(s)" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label for="apellido" class="col-md-3 control-label">Apellido(s):</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control campo" name="apellidos" placeholder="Apellido(s)" required>
                                             </div>
                                         </div>
                                         <div class="form-group col-md-12">

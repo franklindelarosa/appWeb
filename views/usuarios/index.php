@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    $(document).ready(function() {        
+    $(document).ready(function() {
         linkView();
     });
 
@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p class="btn-right">
-        <?= Html::a('Crear Usuarios', ['create'], ['class' => 'btn btn-success  btn-lg']) ?>
+        <?= Html::a('Crear Usuarios', ['create'], ['class' => 'btn btn-success btn-lg']) ?>
     </p>
 
     <?= GridView::widget([
@@ -33,16 +33,17 @@ $this->params['breadcrumbs'][] = $this->title;
             // ['class' => 'yii\grid\SerialColumn'],
 
             // 'id_usuario',
-            'nombre',
-            'usuario',
+            'nombres',
+            'apellidos',
+            'correo',
+            // 'usuario',
             // 'contrasena',
+            'telefono',
             // 'sexo',
             ['attribute' => 'sexo',
             'value' => function($sexo){ if($sexo === 'f'){return 'Femenino';}else{return 'Masculino';}},
             'filter' => ['m' => 'Masculino', 'f' => 'Femenino'],
             ],
-            'telefono',
-            'correo',
             [
                 'attribute' => 'estado',
                 'value' => function($valor){

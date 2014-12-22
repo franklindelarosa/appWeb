@@ -81,6 +81,7 @@ class UsuariosController extends Controller
         $model = new Usuarios();
         if ($model->load(Yii::$app->request->post())) {
             $model->contrasena = sha1($model->contrasena);
+            $model->accessToken = $model->contrasena;
             if($model->perfil === '' || $model->perfil === NULL){
                 $model->perfil = 'Jugador';
             }
@@ -114,14 +115,16 @@ class UsuariosController extends Controller
         if(Yii::$app->user->id===$model->id || Yii::$app->user->can('Administrador')){
             if ($model->load(Yii::$app->request->post())) {
                 ($model->contrasena === '') ? $model->contrasena = $contrasena : $model->contrasena = sha1($model->contrasena);
+                $model->accessToken = $model->contrasena;
                 $role = Yii::$app->authManager->getRole($model->perfil);
                 if($model->perfil !== ''){
                     Yii::$app->authManager->revokeAll($id);
                     Yii::$app->authManager->assign($role, $id);
                 }
                 $model->usuario = $model->correo;
-                if($model->save())
+                if($model->save()){
                     return $this->redirect(['view', 'id' => $model->id_usuario]);
+                }
             } else {
                 $query = new Query;
                 $roles = $query->select('name')->from('items')->all();

@@ -25,28 +25,35 @@ use yii\widgets\ActiveForm;
                 <?php $form = ActiveForm::begin(['id' => 'usuarios-form']); ?>
 
                 <div class="form-group col-md-12">
-                    <label for="nombre" class="col-md-2 control-label">Nombre:</label>
+                    <label for="nombres" class="col-md-2 control-label">Nombre(s):</label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control" value="<?= $model['nombre'];?>" name="Usuarios[nombre]" placeholder="Nombre" required>
+                        <input type="text" class="form-control" value="<?= $model['nombres'];?>" name="Usuarios[nombres]" placeholder="Nombre(s)" required>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12">
-                    <label for="nombre" class="col-md-2 control-label">Email:</label>
+                    <label for="apellidos" class="col-md-2 control-label">Apellido(s):</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" value="<?= $model['apellidos'];?>" name="Usuarios[apellidos]" placeholder="Apellido(s)" required>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="email" class="col-md-2 control-label">Email:</label>
                     <div class="col-md-10">
                         <input type="text" class="form-control" value="<?= $model['correo'];?>" name="Usuarios[correo]" placeholder="Email" required>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12">
-                    <label for="nombre" class="col-md-2 control-label">Contraseña:</label>
+                    <label for="contrasena" class="col-md-2 control-label">Contraseña:</label>
                     <div class="col-md-10">
                         <input type="password" class="form-control" name="Usuarios[contrasena]" placeholder="Contraseña" <?= $model->isNewRecord ? 'required' : '' ?> >
                     </div>
                 </div>
 
                 <div class="form-group col-md-12">
-                    <label for="nombre" class="col-md-2 control-label">Sexo:</label>
+                    <label for="sexo" class="col-md-2 control-label">Sexo:</label>
                     <div class="col-md-10">
                         <select id="sexo" name="Usuarios[sexo]" class="form-control" required>
                             <option value="">Selecciona el sexo</option>
@@ -72,7 +79,7 @@ use yii\widgets\ActiveForm;
 
                 <?php if(Yii::$app->user->can('Administrador')){?>
                 <div class="form-group col-md-12">
-                    <label for="nombre" class="col-md-2 control-label">Perfil:</label>
+                    <label for="perfil" class="col-md-2 control-label">Perfil:</label>
                     <div class="col-md-10">
                         <select id="perfil" name="Usuarios[perfil]" class="form-control">
                             <option value="">Selecciona un perfil</option>
@@ -85,7 +92,7 @@ use yii\widgets\ActiveForm;
                 <?php } ?>
 
                 <div class="form-group col-md-12">
-                    <label for="nombre" class="col-md-2 control-label">Telefono:</label>
+                    <label for="telefono" class="col-md-2 control-label">Telefono:</label>
                     <div class="col-md-10">
                         <input type="text" class="form-control" value="<?= $model['telefono'];?>" name="Usuarios[telefono]" placeholder="Telefono" required>
                     </div>

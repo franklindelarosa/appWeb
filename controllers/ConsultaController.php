@@ -61,7 +61,7 @@ class ConsultaController extends Controller
                 \Yii::$app->db->createCommand($sql)->execute();
                 $result['entidad'] = 'usuario';
                 $result['id'] = $data['usuario'];
-                $result['nombre'] = $user->nombre;
+                $result['nombre'] = $user->nombres." ".$user->apellidos;
                 $transaction->commit();
                 $result['mensaje'] = 'ok';
             } catch (Exception $e) {
@@ -79,6 +79,10 @@ class ConsultaController extends Controller
             try {
                 if($_POST['entidad'] === 'usuario'){
                     $sql = "DELETE FROM usuarios_partidos WHERE id_partido = ".$_POST['partido']." AND id_usuario = ".$_POST['jugador'];
+                    \Yii::$app->db->createCommand($sql)->execute();
+                    $sql = "SELECT id_invitado FROM invitaciones WHERE id_partido = ".$_POST['partido']." AND id_usuario = ".$_POST['jugador'];
+                    $result['invitados'] = \Yii::$app->db->createCommand($sql)->queryAll();
+                    $sql = "DELETE FROM invitaciones WHERE id_partido = ".$_POST['partido']." AND id_usuario = ".$_POST['jugador'];
                     \Yii::$app->db->createCommand($sql)->execute();
                 }else{
                     $sql = "DELETE FROM invitaciones WHERE id_partido = ".$_POST['partido']." AND id_invitado = ".$_POST['jugador'];
@@ -104,12 +108,14 @@ class ConsultaController extends Controller
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
                     $usuario = new Usuarios();
-                    $usuario->nombre = $data['nombre'];
+                    $usuario->nombres = $data['nombres'];
+                    $usuario->apellidos = $data['apellidos'];
                     $usuario->correo = $data['correo'];
                     $usuario->usuario = $data['correo'];
                     $usuario->sexo = $data['sexo'];
                     $usuario->telefono = $data['telefono'];
                     $usuario->contrasena = sha1($data['telefono']);
+                    $usuario->accessToken = $usuario->contrasena;
                     if($usuario->save()){
                         $sql = "INSERT INTO usuarios_partidos (id_usuario, id_partido, equipo) VALUES ('".$usuario->id_usuario."', '".$data['partido']."', '".strtolower(substr($data['equipo'],0,1))."')";
                         \Yii::$app->db->createCommand($sql)->execute();
@@ -128,7 +134,8 @@ class ConsultaController extends Controller
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
                     $invitado = new Invitados();
-                    $invitado->nombre = $data['nombre'];
+                    $invitado->nombres = $data['nombres'];
+                    $invitado->apellidos = $data['apellidos'];
                     $invitado->correo = $data['correo'];
                     $invitado->sexo = $data['sexo'];
                     $invitado->telefono = $data['telefono'];
@@ -147,7 +154,7 @@ class ConsultaController extends Controller
                     $transaction->rollBack();
                 }
             }
-            $result['nombre'] = $data['nombre'];
+            $result['nombre'] = $data['nombres']." ".$data['apellidos'];
             \Yii::$app->response->format = 'json';
             return $result;
         }
@@ -180,7 +187,7 @@ class ConsultaController extends Controller
         try {
             $sql = "SELECT * FROM usuarios_partidos WHERE id_partido = ".$_POST['id'];
             $total = \Yii::$app->db->createCommand($sql)->query()->getRowCount();
-            ($total > 0) ? $sql = "SELECT DISTINCT id_usuario, nombre FROM usuarios WHERE (id_usuario) NOT IN (SELECT id_usuario FROM usuarios_partidos WHERE id_partido = ".$_POST['id'].")" : $sql = "SELECT id_usuario, correo, nombre FROM usuarios";
+            ($total > 0) ? $sql = "SELECT DISTINCT id_usuario, CONCAT(nombres, ' ', apellidos) nombre FROM usuarios WHERE (id_usuario) NOT IN (SELECT id_usuario FROM usuarios_partidos WHERE id_partido = ".$_POST['id'].")" : $sql = "SELECT id_usuario, correo, CONCAT(nombres, ' ', apellidos) nombre FROM usuarios";
             $usuarios = \Yii::$app->db->createCommand($sql)->query();
             $transaction->commit();
         } catch (Exception $e) {
@@ -192,14 +199,14 @@ class ConsultaController extends Controller
     }
 
     public function actionUsuario(){
-        $sql = "SELECT nombre, correo, (if(sexo = 'f','Femenino','Masculino')) sexo, telefono FROM usuarios WHERE id_usuario = ".$_POST['id'];
+        $sql = "SELECT CONCAT(nombres, ' ', apellidos) nombre, correo, (if(sexo = 'f','Femenino','Masculino')) sexo, telefono FROM usuarios WHERE id_usuario = ".$_POST['id'];
         $user = \Yii::$app->db->createCommand($sql)->queryOne();
         \Yii::$app->response->format = 'json';
         return $user;
     }
 
     public function actionInvitado(){
-        $sql = "SELECT nombre, correo, (if(sexo = 'f','Femenino','Masculino')) sexo, telefono FROM invitados WHERE id_invitado = ".$_POST['id'];
+        $sql = "SELECT CONCAT(nombres, ' ', apellidos) nombre, correo, (if(sexo = 'f','Femenino','Masculino')) sexo, telefono FROM invitados WHERE id_invitado = ".$_POST['id'];
         $guest = \Yii::$app->db->createCommand($sql)->queryOne();
         \Yii::$app->response->format = 'json';
         return $guest;

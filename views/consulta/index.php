@@ -1,6 +1,5 @@
 <script type="text/javascript">
     $(document).ready(function() {
-
         $(document).on('click', '#tablaConsulta tr.partido',function(event) {
             event.preventDefault();
             partido = $(this).attr('data-key');
@@ -19,7 +18,7 @@
             var celda = $(this);
             var data = celda.attr('data-id');
             if(data!=null){
-                $.post(celda.attr('data-entidad'), {id: data}).done(function(data) {
+                $.post(celda.attr('data-entidad'), {id: data, partido: partido}).done(function(data) {
                     generarTablaUsuario(data);
                     $('#usuarioModal').modal();
                 });
@@ -58,10 +57,12 @@
             $.post('sacarjugador', {jugador: current.attr('data-id'), entidad: current.attr('data-entidad'), equipo: current.attr('data-equipo'), partido: partido}).done(function(data){
                 if(data['mensaje'] === 'ok'){
                     restaurarCelda(current);
-                    $.each(data['invitados'], function(index, val) {
-                        celda = $('#cuerpoModal td[data-id = "'+val['id_invitado']+'"]');
-                        restaurarCelda(celda);
-                    });
+                    if(typeof(data['invitados']) != "undefined" && data['invitados'] !== null) {
+                        $.each(data['invitados'], function(index, val) {
+                            celda = $('#cuerpoModal td[data-id = "'+val['id_invitado']+'"]');
+                            restaurarCelda(celda);
+                        });
+                    }
                 }
             });
         });
@@ -106,22 +107,23 @@
         $.each(data, function(index, val) {
             $.each(val, function(i, v) {
                 if (index == 0){
-                    $('#'+tabla).append('<tr><td style="color:green" data-entidad="usuario" data-equipo="'+equipo+'" data-id='+v['id_usuario']+' class="text-center">'+v['nombre']+'</td></tr>');
+                    $('#'+tabla).append('<tr><td data-entidad="usuario" data-equipo="'+equipo+'" data-id='+v['id_usuario']+' class="text-center user-color">'+v['nombre']+'</td></tr>');
                 }else{
-                    $('#'+tabla).append('<tr><td style="color:green" data-entidad="invitado" data-equipo="'+equipo+'" data-id='+v['id_invitado']+' class="text-center">'+v['nombre']+'</td></tr>');
+                    $('#'+tabla).append('<tr><td data-entidad="invitado" data-equipo="'+equipo+'" data-id='+v['id_invitado']+' class="text-center guest-color">'+v['nombre']+'</td></tr>');
                 }
             });
         });
         for (var i = 0; i < n; i++) {
-            $('#'+tabla).append('<tr><td data-equipo="'+equipo+'" style="color:blue" class="text-center">Invitar</td></tr>');
+            $('#'+tabla).append('<tr><td data-equipo="'+equipo+'" class="text-center free-color">Invitar (cupo libre)</td></tr>');
         };
     }
 
     function restaurarCelda(celda){
-        celda.html('Invitar');
-        celda.attr({"style": "color:blue"});
+        celda.html('Invitar (cupo libre)');
+        celda.removeClass();
+        celda.addClass('text-center free-color');
+        // celda.attr({"style": "color:blue"});
         celda.removeAttr('data-id');
-        celda.removeAttr('data-equipo');
         celda.removeAttr('data-entidad');
     }
 
@@ -132,6 +134,11 @@
         $('#infoUsuario').append('<tr><td class="text-center"> Correo: '+data['correo']+'</td></tr>');
         $('#infoUsuario').append('<tr><td class="text-center"> Sexo: '+data['sexo']+'</td></tr>');
         $('#infoUsuario').append('<tr><td class="text-center"> Teléfono: '+data['telefono']+'</td></tr>');
+        if(typeof(data['responsable']) != "undefined" && data['responsable'] !== null) {
+            $('#infoUsuario').append('<tr><td></td></tr>');
+            $('#infoUsuario').append('<tr><td class="text-center"> Responsable: '+data['responsable']+'</td></tr>');
+            $('#infoUsuario').append('<tr><td class="text-center"> Tel. Responsable: '+data['tel']+'</td></tr>');
+        }
     }
 
     function generarListadoUsuarios(data){
@@ -146,12 +153,16 @@
     function generarInvitacion(action, data){
         $.post(action, {data: data}).done(function(data){
             if(data['mensaje'] === 'ok'){
-                $('#cuerpoModal td.currentPlayer').html(data['nombre']);
-                $('#cuerpoModal td.currentPlayer').attr({
-                    "style": 'color:green',
+                celda = $('#cuerpoModal td.currentPlayer');
+                celda.html(data['nombre']);
+                celda.attr({
                     "data-id": data['id'],
                     "data-entidad": data['entidad']
                 });
+                var clase;
+                data['entidad'] === 'invitado' ? clase = "text-center guest-color" : clase = "text-center user-color";
+                celda.removeClass();
+                celda.addClass(clase);
             }
         });
     }

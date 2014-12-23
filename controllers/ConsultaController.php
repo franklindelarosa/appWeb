@@ -84,12 +84,12 @@ class ConsultaController extends Controller
                     $result['invitados'] = \Yii::$app->db->createCommand($sql)->queryAll();
                     $sql = "DELETE FROM invitaciones WHERE id_partido = ".$_POST['partido']." AND id_usuario = ".$_POST['jugador'];
                     \Yii::$app->db->createCommand($sql)->execute();
+                    $sql = "UPDATE partidos SET ".strtolower($_POST['equipo'])."s = (".strtolower($_POST['equipo'])."s-1) WHERE id_partido = ".$_POST['partido'];
+                    \Yii::$app->db->createCommand($sql)->execute();
                 }else{
                     $sql = "DELETE FROM invitaciones WHERE id_partido = ".$_POST['partido']." AND id_invitado = ".$_POST['jugador'];
                     \Yii::$app->db->createCommand($sql)->execute();
                 }
-                $sql = "UPDATE partidos SET ".strtolower($_POST['equipo'])."s = (".strtolower($_POST['equipo'])."s-1) WHERE id_partido = ".$_POST['partido'];
-                \Yii::$app->db->createCommand($sql)->execute();
                 $transaction->commit();
                 $result['mensaje'] = 'ok';
             } catch (Exception $e) {
@@ -206,7 +206,7 @@ class ConsultaController extends Controller
     }
 
     public function actionInvitado(){
-        $sql = "SELECT CONCAT(nombres, ' ', apellidos) nombre, correo, (if(sexo = 'f','Femenino','Masculino')) sexo, telefono FROM invitados WHERE id_invitado = ".$_POST['id'];
+        $sql = "SELECT CONCAT(i.nombres, ' ', i.apellidos) nombre, i.correo, (if(i.sexo = 'f','Femenino','Masculino')) sexo, i.telefono, CONCAT (u.nombres, ' ', u.apellidos) responsable, u.telefono tel FROM invitados i, invitaciones ic, usuarios u WHERE u.id_usuario = ic.id_usuario AND i.id_invitado = ic.id_invitado AND ic.id_partido = ".$_POST['partido']." AND i.id_invitado = ".$_POST['id'];
         $guest = \Yii::$app->db->createCommand($sql)->queryOne();
         \Yii::$app->response->format = 'json';
         return $guest;

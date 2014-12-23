@@ -53,6 +53,18 @@ textarea{
     resize: vertical;
 }
 
+.user-color{
+    color: green;
+}
+
+.guest-color{
+    color: blue;
+}
+
+.free-color{
+    color: red;
+}
+
 .navbar-brand{
     position: relative;
     bottom: 10px;

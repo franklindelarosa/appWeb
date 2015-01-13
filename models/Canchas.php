@@ -13,6 +13,8 @@ use Yii;
  * @property string $telefono
  * @property integer $cupo_max
  * @property integer $estado
+ * @property string $imagen_logo
+ * @property string $imagen_cancha
  *
  * @property Estados $estado
  *
@@ -36,7 +38,8 @@ class Canchas extends \yii\db\ActiveRecord
         return [
             [['nombre', 'direccion', 'telefono', 'cupo_max'], 'required'],
             [['cupo_max', 'estado'], 'integer'],
-            [['nombre', 'direccion', 'telefono'], 'string', 'max' => 45]
+            [['nombre', 'direccion', 'telefono'], 'string', 'max' => 45],
+            [['imagen_logo', 'imagen_cancha'], 'string', 'max' => 30]
         ];
     }
 
@@ -52,6 +55,8 @@ class Canchas extends \yii\db\ActiveRecord
             'telefono' => 'Telefono',
             'cupo_max' => 'Cupo Max',
             'estado' => 'Estado',
+            'imagen_logo' => 'Nombre Logo',
+           'imagen_cancha' => 'Nombre Cancha',
         ];
     }
 

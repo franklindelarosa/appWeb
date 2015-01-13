@@ -132,6 +132,10 @@ class CanchasController extends Controller
                 $mask = 'images/'.$model->destino.'/'.$model->cancha.'*.*';
                 array_map('unlink', glob($mask));
                 $model->file->saveAs('images/'.$model->destino.'/'.$model->cancha.'.'. $model->file->extension);
+                $cancha = $this->findModel($model->cancha);
+                $nombre = $model->cancha.'.'. $model->file->extension;
+                $model->destino === "canchas" ? $cancha->imagen_cancha = $nombre : $cancha->imagen_logo = $nombre;
+                $cancha->save();
             }
         }
         return $this->redirect(['view', 'id' => $model->cancha, 'status' => '1']);

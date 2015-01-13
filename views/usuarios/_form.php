@@ -39,6 +39,13 @@ use yii\widgets\ActiveForm;
                 </div>
 
                 <div class="form-group col-md-12">
+                    <label for="telefono" class="col-md-2 control-label">Telefono:</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" value="<?= $model['telefono'];?>" name="Usuarios[telefono]" placeholder="Telefono" required>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
                     <label for="email" class="col-md-2 control-label">Email:</label>
                     <div class="col-md-10">
                         <input type="text" class="form-control" value="<?= $model['correo'];?>" name="Usuarios[correo]" placeholder="Email" required>
@@ -90,14 +97,6 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
                 <?php } ?>
-
-                <div class="form-group col-md-12">
-                    <label for="telefono" class="col-md-2 control-label">Telefono:</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" value="<?= $model['telefono'];?>" name="Usuarios[telefono]" placeholder="Telefono" required>
-                    </div>
-                </div>
-
 
                 <div class= "form-group col-md-12 text-center">
                         <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => 'btn btn-primary']) ?>

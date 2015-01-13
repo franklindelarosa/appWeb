@@ -1,0 +1,5 @@
+#RewriteEngine on
+#RewriteCond %{HTTP_HOST} ^http://elecsis.com.co/fcracks$ [NC,OR]
+#RewriteCond %{HTTP_HOST} ^http://elecsis.com.co/fcracks$
+#RewriteCond %{REQUEST_URI} !web/
+#RewriteRule (.*) /$1 [L]

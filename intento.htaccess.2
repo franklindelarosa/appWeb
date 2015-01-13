@@ -1,0 +1,22 @@
+RewriteEngine on
+# Cambiar tudominio.com a tu dominio principal.
+		# entre los parentesis va el www. o http://
+RewriteCond %{HTTP_HOST} ^(http://)?elecsis.com.co/fcracks$
+
+# Cambiar 'subfolder' por el directorio que se desea usar como dominio principal. Osea public
+RewriteCond %{REQUEST_URI} !^/web/
+
+# NO cambiar esta línea
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Cambiar 'subfolder' por el directorio que se desea usar como dominio principal. Osea public
+RewriteRule ^(.*)$ /web/$1
+
+
+
+# Cambiar tudominio.com a tu dominio principal (otra vez).
+RewriteCond %{HTTP_HOST} ^(http://)?elecsis.com.co/fcracks$
+# Cambiar 'subfolder' por el directorio que se desea usar como dominio principal. Osea public
+# seguido por la contrabarra/ y el archivo principal de tu sitio, index.php, index.html, etc.
+RewriteRule ^(/)?$ web/index.php [L] 

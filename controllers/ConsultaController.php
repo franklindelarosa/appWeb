@@ -115,7 +115,7 @@ class ConsultaController extends Controller
                     $usuario->sexo = $data['sexo'];
                     $usuario->telefono = $data['telefono'];
                     $usuario->contrasena = sha1($data['telefono']);
-                    $usuario->accessToken = $usuario->contrasena;
+                    $usuario->accessToken = md5($usuario->contrasena);
                     if($usuario->save()){
                         $sql = "INSERT INTO usuarios_partidos (id_usuario, id_partido, equipo) VALUES ('".$usuario->id_usuario."', '".$data['partido']."', '".strtolower(substr($data['equipo'],0,1))."')";
                         \Yii::$app->db->createCommand($sql)->execute();

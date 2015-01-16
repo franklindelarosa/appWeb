@@ -115,7 +115,7 @@ class UsuariosController extends Controller
         if(Yii::$app->user->id===$model->id || Yii::$app->user->can('Administrador')){
             if ($model->load(Yii::$app->request->post())) {
                 ($model->contrasena === '') ? $model->contrasena = $contrasena : $model->contrasena = sha1($model->contrasena);
-                $model->accessToken = $model->contrasena;
+                $model->accessToken = md5($model->contrasena);
                 $role = Yii::$app->authManager->getRole($model->perfil);
                 if($model->perfil !== ''){
                     Yii::$app->authManager->revokeAll($id);

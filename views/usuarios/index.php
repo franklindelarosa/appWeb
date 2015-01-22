@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'telefono',
             // 'sexo',
             ['attribute' => 'sexo',
-            'value' => function($sexo){ if($sexo === 'f'){return 'Femenino';}else{return 'Masculino';}},
+            'value' => function($dato){ if($dato['sexo'] === 'f'){return 'Femenino';}else{return 'Masculino';}},
             'filter' => ['m' => 'Masculino', 'f' => 'Femenino'],
             ],
             [

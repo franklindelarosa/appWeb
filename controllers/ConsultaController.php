@@ -89,6 +89,8 @@ class ConsultaController extends Controller
                 }else{
                     $sql = "DELETE FROM invitaciones WHERE id_partido = ".$_POST['partido']." AND id_invitado = ".$_POST['jugador'];
                     \Yii::$app->db->createCommand($sql)->execute();
+                    $sql = "DELETE FROM invitados WHERE id_invitado = ".$_POST['jugador'];
+                    \Yii::$app->db->createCommand($sql)->execute();
                 }
                 $transaction->commit();
                 $result['mensaje'] = 'ok';
@@ -187,7 +189,7 @@ class ConsultaController extends Controller
         try {
             $sql = "SELECT * FROM usuarios_partidos WHERE id_partido = ".$_POST['id'];
             $total = \Yii::$app->db->createCommand($sql)->query()->getRowCount();
-            ($total > 0) ? $sql = "SELECT DISTINCT id_usuario, CONCAT(nombres, ' ', apellidos) nombre FROM usuarios WHERE (id_usuario) NOT IN (SELECT id_usuario FROM usuarios_partidos WHERE id_partido = ".$_POST['id'].")" : $sql = "SELECT id_usuario, correo, CONCAT(nombres, ' ', apellidos) nombre FROM usuarios";
+            ($total > 0) ? $sql = "SELECT DISTINCT id_usuario, CONCAT(nombres, ' ', apellidos) nombre FROM usuarios WHERE estado = 4 AND (id_usuario) NOT IN (SELECT id_usuario FROM usuarios_partidos WHERE id_partido = ".$_POST['id'].")" : $sql = "SELECT id_usuario, correo, CONCAT(nombres, ' ', apellidos) nombre FROM usuarios WHERE estado = 4";
             $usuarios = \Yii::$app->db->createCommand($sql)->query();
             $transaction->commit();
         } catch (Exception $e) {

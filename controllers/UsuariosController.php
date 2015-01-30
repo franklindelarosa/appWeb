@@ -81,7 +81,7 @@ class UsuariosController extends Controller
         $model = new Usuarios();
         if ($model->load(Yii::$app->request->post())) {
             $model->contrasena = sha1($model->contrasena);
-            $model->accessToken = md5($model->contrasena);
+            $model->accessToken = md5(time());
             if($model->perfil === '' || $model->perfil === NULL){
                 $model->perfil = 'Jugador';
             }

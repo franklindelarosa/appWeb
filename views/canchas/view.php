@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="canchas-view">
 
-    <h1><?= Html::encode($this->title) ?></h1><p><img src="<?= Yii::$app->request->baseUrl; ?>/images/logos/<?= $model->getNombrearchivo('logos')  ?>" data-toggle="modal" data-target="#logoModal" alt="logo" style="width:128px;height:128px"><p><br>
+    <h1><?= Html::encode($this->title) ?></h1><p><img src="<?= Yii::$app->request->baseUrl; ?>/images/logos/<?= $model->imagen_logo ?>" data-toggle="modal" data-target="#logoModal" alt="logo" style="width:128px;height:128px"><p><br>
 
     <p class="btn-right"><a href="<?= Yii::$app->request->baseUrl; ?>/canchas/index" class="btn btn-default">Volver</a></p>
     <p>
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="modal-body text-center">
                 <div class="row">
-                    <p><img class="img-botones" src="<?= Yii::$app->request->baseUrl; ?>/images/logos/<?= $model->getNombrearchivo('logos') ?>" alt="logo" style="width:128px;height:128px"><p>
+                    <p><img class="img-botones" src="<?= Yii::$app->request->baseUrl; ?>/images/logos/<?= $model->imagen_logo ?>" alt="logo" style="width:128px;height:128px"><p>
                 </div>
             </div>
             <div class="modal-footer">
@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="modal-body text-center">
                 <div class="row">
-                    <p><img class="img-botones" src="<?= Yii::$app->request->baseUrl; ?>/images/canchas/<?= $model->getNombrearchivo('canchas') ?>" alt="cancha" style="width:500px;height:330px"><p>
+                    <p><img class="img-botones" src="<?= Yii::$app->request->baseUrl; ?>/images/canchas/<?= $model->imagen_cancha ?>" alt="cancha" style="width:500px;height:330px"><p>
                 </div>
             </div>
             <div class="modal-footer">

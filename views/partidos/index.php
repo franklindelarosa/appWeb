@@ -63,10 +63,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             return 'Cancelado';
                             break;
                     }
-            },
+                },
                 'filter' => ['1' => 'Disponible', '2' => 'No disponible', '3' => 'Cancelado'],
             ],
-            // 'id_cancha',
+            'id_cancha',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => ['hidden' => ''],

@@ -118,7 +118,14 @@ class CanchasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $cancha = $this->findModel($id);
+        if($cancha->imagen_logo !== 'default.jpg'){
+            unlink('images/logos/'.$cancha->imagen_logo);
+        }
+        if($cancha->imagen_cancha !== 'default.jpg'){
+            unlink('images/canchas/'.$cancha->imagen_cancha);
+        }
+        $cancha->delete();
 
         return $this->redirect(['index']);
     }
@@ -129,13 +136,24 @@ class CanchasController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->validate()) {
-                $mask = 'images/'.$model->destino.'/'.$model->cancha.'*.*';
-                array_map('unlink', glob($mask));
-                $model->file->saveAs('images/'.$model->destino.'/'.$model->cancha.'.'. $model->file->extension);
                 $cancha = $this->findModel($model->cancha);
-                $nombre = $model->cancha.'.'. $model->file->extension;
-                $model->destino === "canchas" ? $cancha->imagen_cancha = $nombre : $cancha->imagen_logo = $nombre;
-                $cancha->save();
+                $nombre_archivo = md5(time()).'.'. $model->file->extension;
+                if($model->destino === 'logos'){
+                    if($cancha->imagen_logo !== 'default.jpg'){
+                        unlink('images/logos/'.$cancha->imagen_logo);
+                    }
+                    $cancha->imagen_logo = $nombre_archivo;
+                }else{
+                    if($cancha->imagen_cancha !== 'default.jpg'){
+                        unlink('images/canchas/'.$cancha->imagen_cancha);
+                    }
+                    $cancha->imagen_cancha = $nombre_archivo;
+                }
+                // $mask = 'images/'.$model->destino.'/'.$model->cancha.'*.*';
+                // array_map('unlink', glob($mask));
+                // $model->file->saveAs('images/'.$model->destino.'/'.$model->cancha.'.'. $model->file->extension);
+                $model->file->saveAs('images/'.$model->destino.'/'.$nombre_archivo);
+                $cancha->save(false);
             }
         }
         return $this->redirect(['view', 'id' => $model->cancha, 'status' => '1']);

@@ -84,8 +84,8 @@ class ConsultaController extends Controller
                     $result['invitados'] = \Yii::$app->db->createCommand($sql)->queryAll();
                     $sql = "DELETE FROM invitaciones WHERE id_partido = ".$_POST['partido']." AND id_usuario = ".$_POST['jugador'];
                     \Yii::$app->db->createCommand($sql)->execute();
-                    $sql = "UPDATE partidos SET ".strtolower($_POST['equipo'])."s = (".strtolower($_POST['equipo'])."s-1) WHERE id_partido = ".$_POST['partido'];
-                    \Yii::$app->db->createCommand($sql)->execute();
+                    // $sql = "UPDATE partidos SET ".strtolower($_POST['equipo'])."s = (".strtolower($_POST['equipo'])."s-1) WHERE id_partido = ".$_POST['partido'];
+                    // \Yii::$app->db->createCommand($sql)->execute();
                 }else{
                     $sql = "DELETE FROM invitaciones WHERE id_partido = ".$_POST['partido']." AND id_invitado = ".$_POST['jugador'];
                     \Yii::$app->db->createCommand($sql)->execute();

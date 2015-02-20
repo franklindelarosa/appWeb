@@ -41,11 +41,19 @@ class ConsultaController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         // $query = new Query;
         // $usuarios = $query->select('*')->from('usuarios')->where('estado = "4"')->all();
-
+        $fecha = date('Y');
+        $fecha_min = strtotime('-65 year', strtotime($fecha));
+        $fecha_max = strtotime('-10 year', strtotime($fecha));
+        $fecha_min = date('Y',$fecha_min);
+        $fecha_max = date('Y',$fecha_max);
+        $rango_fecha = ''.$fecha_min.':'.$fecha_max;
+        $query = new Query;
+        $posiciones = $query->select('*')->from('posiciones')->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            // 'usuarios' => $usuarios,
+            'rango_fecha' => $rango_fecha,
+            'posiciones' => $posiciones,
         ]);
     }
 
@@ -117,7 +125,14 @@ class ConsultaController extends Controller
                     $usuario->sexo = $data['sexo'];
                     $usuario->telefono = $data['telefono'];
                     $usuario->contrasena = sha1($data['telefono']);
-                    $usuario->accessToken = md5($usuario->contrasena);
+                    $usuario->accessToken = md5(time());
+                    $usuario->id_posicion = $data['posicion'];
+                    if(isset($data['fecha_nacimiento']) && $data['fecha_nacimiento'] !== ""){
+                        $usuario->fecha_nacimiento = $data['fecha_nacimiento'];
+                    }
+                    if(isset($data['pierna_habil']) && $data['pierna_habil'] !== ""){
+                        $usuario->pierna_habil = $data['pierna_habil'];
+                    }
                     if($usuario->save()){
                         $sql = "INSERT INTO usuarios_partidos (id_usuario, id_partido, equipo) VALUES ('".$usuario->id_usuario."', '".$data['partido']."', '".strtolower(substr($data['equipo'],0,1))."')";
                         \Yii::$app->db->createCommand($sql)->execute();
@@ -141,6 +156,13 @@ class ConsultaController extends Controller
                     $invitado->correo = $data['correo'];
                     $invitado->sexo = $data['sexo'];
                     $invitado->telefono = $data['telefono'];
+                    $invitado->id_posicion = $data['posicion'];
+                    if(isset($data['fecha_nacimiento']) && $data['fecha_nacimiento'] !== ""){
+                        $invitado->fecha_nacimiento = $data['fecha_nacimiento'];
+                    }
+                    if(isset($data['pierna_habil']) && $data['pierna_habil'] !== ""){
+                        $invitado->pierna_habil = $data['pierna_habil'];
+                    }
                     if($invitado->save()){
                         $sql = "INSERT INTO invitaciones (id_usuario, id_invitado, equipo, id_partido) VALUES ('".Yii::$app->user->id."', '".$invitado->id_invitado."', '".strtolower(substr($data['equipo'],0,1))."', '".$data['partido']."')";
                         \Yii::$app->db->createCommand($sql)->execute();
@@ -201,14 +223,14 @@ class ConsultaController extends Controller
     }
 
     public function actionUsuario(){
-        $sql = "SELECT CONCAT(nombres, ' ', apellidos) nombre, correo, (if(sexo = 'f','Femenino','Masculino')) sexo, telefono FROM usuarios WHERE id_usuario = ".$_POST['id'];
+        $sql = "SELECT CONCAT(u.nombres, ' ', u.apellidos) nombre, u.correo, (if(u.sexo = 'f','Femenino','Masculino')) sexo, u.telefono, u.pierna_habil, u.fecha_nacimiento, p.posicion FROM usuarios u, posiciones p WHERE p.id_posicion = u.id_posicion AND u.id_usuario = ".$_POST['id'];
         $user = \Yii::$app->db->createCommand($sql)->queryOne();
         \Yii::$app->response->format = 'json';
         return $user;
     }
 
     public function actionInvitado(){
-        $sql = "SELECT CONCAT(i.nombres, ' ', i.apellidos) nombre, i.correo, (if(i.sexo = 'f','Femenino','Masculino')) sexo, i.telefono, CONCAT (u.nombres, ' ', u.apellidos) responsable, u.telefono tel FROM invitados i, invitaciones ic, usuarios u WHERE u.id_usuario = ic.id_usuario AND i.id_invitado = ic.id_invitado AND ic.id_partido = ".$_POST['partido']." AND i.id_invitado = ".$_POST['id'];
+        $sql = "SELECT CONCAT(i.nombres, ' ', i.apellidos) nombre, i.correo, (if(i.sexo = 'f','Femenino','Masculino')) sexo, i.telefono, i.pierna_habil, i.fecha_nacimiento, p.posicion, CONCAT (u.nombres, ' ', u.apellidos) responsable, u.telefono tel FROM invitados i, invitaciones ic, usuarios u, posiciones p WHERE p.id_posicion = i.id_posicion AND u.id_usuario = ic.id_usuario AND i.id_invitado = ic.id_invitado AND ic.id_partido = ".$_POST['partido']." AND i.id_invitado = ".$_POST['id'];
         $guest = \Yii::$app->db->createCommand($sql)->queryOne();
         \Yii::$app->response->format = 'json';
         return $guest;

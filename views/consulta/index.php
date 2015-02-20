@@ -40,6 +40,7 @@
         $('#btnInvitado').on('click', function(event) {
             event.preventDefault();
             var enviar = true;
+            console.log($('#form-invitado').serialize());
             $.each($('.campo'), function(index, val) {
                 if(val.value.trim().length == 0){
                     success('No puedes dejar campos sin llenar','3');
@@ -65,6 +66,11 @@
                     }
                 }
             });
+        });
+
+        $('#btnConfirmar').on('click', function(event) {
+            event.preventDefault();
+            $('#confirmacionModal').modal({backdrop:'static'});
         });
 
         $('#equiposModal').on('hidden.bs.modal', function(event) {
@@ -122,9 +128,30 @@
         celda.html('Invitar (cupo libre)');
         celda.removeClass();
         celda.addClass('text-center free-color');
-        // celda.attr({"style": "color:blue"});
         celda.removeAttr('data-id');
         celda.removeAttr('data-entidad');
+    }
+
+    function calcular_edad(fecha) {
+        var values = fecha.split("-");
+        var dia = values[2];
+        var mes = values[1];
+        var ano = values[0];
+        var fecha_hoy = new Date();
+        var ahora_ano = fecha_hoy.getYear();
+        var ahora_mes = fecha_hoy.getMonth()+1;
+        var ahora_dia = fecha_hoy.getDate();
+        var edad = (ahora_ano + 1900) - ano;
+        if (ahora_mes < mes){
+            edad--;
+        }
+        if ((mes === ahora_mes) && (ahora_dia < dia)){
+            edad--;
+        }
+        if (edad > 1900){
+            edad -= 1900;
+        }
+        return edad;
     }
 
     function generarTablaUsuario(data){
@@ -133,7 +160,12 @@
         $('#infoUsuario').append('<tr><td class="text-center"> Nombre: '+data['nombre']+'</td></tr>');
         $('#infoUsuario').append('<tr><td class="text-center"> Correo: '+data['correo']+'</td></tr>');
         $('#infoUsuario').append('<tr><td class="text-center"> Sexo: '+data['sexo']+'</td></tr>');
+        data['fecha_nacimiento'] !== null ? $('#infoUsuario').append('<tr><td class="text-center"> Edad: '+calcular_edad(data['fecha_nacimiento'])+'</td></tr>')
+        : $('#infoUsuario').append('<tr><td class="text-center"> Edad: Sin definir</td></tr>');
         $('#infoUsuario').append('<tr><td class="text-center"> Teléfono: '+data['telefono']+'</td></tr>');
+        $('#infoUsuario').append('<tr><td class="text-center"> Posición: '+data['posicion']+'</td></tr>');
+        data['pierna_habil'] !== null ? $('#infoUsuario').append('<tr><td class="text-center"> Pierna hábil: '+data['pierna_habil']+'</td></tr>')
+        : $('#infoUsuario').append('<tr><td class="text-center"> Pierna hábil: Sin definir</td></tr>');
         if(typeof(data['responsable']) != "undefined" && data['responsable'] !== null) {
             $('#infoUsuario').append('<tr><td></td></tr>');
             $('#infoUsuario').append('<tr><td class="text-center"> Responsable: '+data['responsable']+'</td></tr>');
@@ -277,10 +309,25 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="modal-body">
                 <table id="infoUsuario" class="table table-striped table-bordered table-hover">
                 </table>
-                <button id="btnSacar" data-dismiss="modal" class="btn btn-danger col-sm-offset-3">Sacar del partido</button>
+                <button id="btnConfirmar" data-dismiss="modal" class="btn btn-danger col-sm-offset-3">Sacar del partido</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="confirmacionModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title text-center">Seguro que deseas sacarlo del partido?</h4>
+            </div>
+            <div class="modal-body">
+                <button id="btnSacar" data-dismiss="modal" class="btn btn-danger col-sm-offset-3">Si</button>
+                <button id="btnSacar" data-dismiss="modal" class="btn btn-primary col-sm-offset-3">No</button>
             </div>
         </div>
     </div>
@@ -347,6 +394,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </div>
                                         </div>
                                         <div class="form-group col-md-12">
+                                            <label for="fecha_nacimiento" class="col-md-3 control-label">Fecha de nacimiento:</label>
+                                            <div class="col-md-9">
+                                                <?= yii\jui\DatePicker::widget(["id" => "fecha_nacimiento", "name" => "fecha_nacimiento", "dateFormat" => "yyyy-MM-dd", 'options' => ['class' => 'form-control', "placeholder" => "aaaa-mm-dd"], 'clientOptions'=>['yearRange' => $rango_fecha, 'changeMonth'=>'true', 'changeYear'=>'true'], 'language'=>'es'])?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
                                             <label for="correo" class="col-md-3 control-label">Correo:</label>
                                             <div class="col-md-9">
                                                 <input type="email" class="form-control campo" name="correo" placeholder="Correo electrónico" required>
@@ -366,6 +419,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <label for="telefono" class="col-md-3 control-label">Teléfono:</label>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control campo" name="telefono" placeholder="Teléfono" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label for="pierna_habil" class="col-md-3 control-label">Pierna hábil:</label>
+                                            <div class="col-md-9">
+                                                <select id="pierna_habil" name="pierna_habil" class="form-control">
+                                                    <option value="">Sin definir</option>
+                                                    <option value="Derecha">Derecha</option>
+                                                    <option value="Izquierda">Izquierda</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label for="posicion" class="col-md-3 control-label">Posición:</label>
+                                            <div class="col-md-9">
+                                                <select id="posicion" name="posicion" class="form-control">
+                                                    <?php foreach($posiciones as $row){?>
+                                                        <option value="<?= $row['id_posicion'];?>"><?= $row['posicion'];?></option>
+                                                    <?php }?>
+                                                </select>
                                             </div>
                                         </div>
                                         <input hidden class="helper" type="text" name="equipo" required>

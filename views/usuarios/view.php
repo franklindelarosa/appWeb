@@ -35,11 +35,23 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'id_usuario',
             'nombres',
             'apellidos',
-            'usuario',
+            // 'usuario',
             // 'contrasena',
+            [
+                'attribute' => 'fecha_nacimiento',
+                'value' => $model->fecha_nacimiento === NULL ? 'Sin definir' : $model->fecha_nacimiento,
+            ],
             ['attribute' => 'sexo', 'value' => $model->sexo === 'f' ? 'Femenino' : 'Masculino'],
             'telefono',
             'correo',
+            [
+                'attribute' => 'id_posicion',
+                'value' => $model->idPosicion->posicion,
+            ],
+            [
+                'attribute' => 'pierna_habil',
+                'value' => $model->pierna_habil !== '' ? $model->pierna_habil : 'Sin definir',
+            ],
             [
                 'attribute' => 'estado',
                 'value' => $model->idEstado->nombre,

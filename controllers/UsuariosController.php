@@ -90,13 +90,24 @@ class UsuariosController extends Controller
                 $role = Yii::$app->authManager->getRole($model->perfil);
                 Yii::$app->authManager->assign($role, $model->id_usuario);
                 return $this->redirect(['view', 'id' => $model->id_usuario]);
+            }else{
+                return $this->redirect(['create']);
             }
         } else {
+            $fecha = date('Y');
+            $fecha_min = strtotime('-65 year', strtotime($fecha));
+            $fecha_max = strtotime('-10 year', strtotime($fecha));
+            $fecha_min = date('Y',$fecha_min);
+            $fecha_max = date('Y',$fecha_max);
+            $rango_fecha = ''.$fecha_min.':'.$fecha_max;
             $query = new Query;
             $roles = $query->select('name')->from('items')->all();
+            $posiciones = $query->select('*')->from('posiciones')->all();
             return $this->render('create', [
                 'model' => $model,
                 'roles' => $roles,
+                'posiciones' => $posiciones,
+                'rango_fecha' => $rango_fecha,
             ]);
         }
     }
@@ -121,19 +132,28 @@ class UsuariosController extends Controller
                     Yii::$app->authManager->assign($role, $id);
                 }
                 $model->usuario = $model->correo;
-                if($model->save(false)){
+                if($model->save()){
                     return $this->redirect(['view', 'id' => $model->id_usuario]);
                 }else{
                     return $this->redirect(['update', 'id' => $model->id_usuario]);
                 }
             } else {
+                $fecha = date('Y');
+                $fecha_min = strtotime('-65 year', strtotime($fecha));
+                $fecha_max = strtotime('-10 year', strtotime($fecha));
+                $fecha_min = date('Y',$fecha_min);
+                $fecha_max = date('Y',$fecha_max);
+                $rango_fecha = ''.$fecha_min.':'.$fecha_max;
                 $query = new Query;
                 $roles = $query->select('name')->from('items')->all();
+                $posiciones = $query->select('*')->from('posiciones')->all();
                 $estados = $query->select('*')->from('estados')->where('entidad = "usuarios"')->all();
                 return $this->render('update', [
                     'model' => $model,
                     'estados' => $estados,
                     'roles' => $roles,
+                    'posiciones' => $posiciones,
+                    'rango_fecha' => $rango_fecha,
                 ]);
             }
         }else{

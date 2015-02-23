@@ -327,7 +327,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="modal-body">
                 <button id="btnSacar" data-dismiss="modal" class="btn btn-danger col-sm-offset-3">Si</button>
-                <button id="btnSacar" data-dismiss="modal" class="btn btn-primary col-sm-offset-3">No</button>
+                <button data-dismiss="modal" class="btn btn-primary col-sm-offset-3">No</button>
             </div>
         </div>
     </div>

@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'pierna_habil',
-                'value' => $model->pierna_habil !== '' ? $model->pierna_habil : 'Sin definir',
+                'value' => $model->pierna_habil !== NULL ? $model->pierna_habil : 'Sin definir',
             ],
             [
                 'attribute' => 'estado',

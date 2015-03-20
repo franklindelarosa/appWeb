@@ -6,9 +6,11 @@ use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
+use app\models\FotoPerfil;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 use yii\db\Query;
 
 /**
@@ -112,6 +114,42 @@ class UsuariosController extends Controller
         }
     }
 
+    public function actionActualizarFoto()
+    {
+        $model = new FotoPerfil();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if ($model->validate()) {
+                $usuario = $this->findModel($model->usuario);
+                $nombre_archivo = md5(time().rand()).'.'. $model->file->extension;
+                (strpos((substr($usuario->foto, 0, 4)), 'http') !== false) ? $nombre_archivo = 'http'.$nombre_archivo : '';
+                if($usuario->foto !== 'default.jpg' && $usuario->foto !== 'httpdefault.jpg'){
+                    unlink($_SERVER['DOCUMENT_ROOT'].'/fcapi/web/fotos/'.$usuario->foto);
+                    // unlink($_SERVER['DOCUMENT_ROOT'].'/futbolcracksapi/web/fotos/'.$usuario->foto);
+                    // $mask = 'images/'.$model->destino.'/'.$model->usuario.'*.*';
+                    // array_map('unlink', glob($mask));
+                }
+                $usuario->foto = $nombre_archivo;
+                $model->file->saveAs($_SERVER['DOCUMENT_ROOT'].'/fcapi/web/fotos/'.$usuario->foto);
+                // $model->file->saveAs($_SERVER['DOCUMENT_ROOT'].'/futbolcracksapi/web/fotos/'.$usuario->foto);
+                $usuario->save();
+            }
+        }
+        return $this->redirect(['view', 'id' => $usuario->id_usuario]);
+    }
+
+    public function actionEliminarFoto($id)
+    {
+        $model = $this->findModel($id);
+        if($model->foto !== 'default.jpg' && $model->foto !== 'httpdefault.jpg'){
+            unlink($_SERVER['DOCUMENT_ROOT'].'/fcapi/web/fotos/'.$model->foto);
+            // unlink($_SERVER['DOCUMENT_ROOT'].'/futbolcracksapi/web/fotos/'.$model->foto);
+        }
+        (strpos((substr($model->foto, 0, 4)), 'http') !== false) ? $model->foto = 'httpdefault.jpg' : $model->foto = 'default.jpg';
+        $model->save();
+        return $this->redirect(['view', 'id' => $model->id_usuario]);
+    }
+
     /**
      * Updates an existing Usuarios model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -193,7 +231,11 @@ class UsuariosController extends Controller
         // return $this->redirect(['index']);
         try {
             Yii::$app->authManager->revokeAll($id);
-            $this->findModel($id)->delete();
+            $model = $this->findModel($id);
+            if($model->foto !== 'default.jpg' && $model->foto !== 'httpdefault.jpg'){
+                unlink($_SERVER['DOCUMENT_ROOT'].'/fcapi/web/fotos/'.$model->foto);
+            }
+            $model->delete();
             return $this->redirect(['index']);
         } catch (yii\db\IntegrityException $e) {
             // throw new NotFoundHttpException('');

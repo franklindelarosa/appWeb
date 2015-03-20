@@ -24,48 +24,49 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="btn-right">
         <?= Html::a('Crear Usuarios', ['create'], ['class' => 'btn btn-success btn-lg']) ?>
     </p>
+    <div class="table-responsive">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'rowOptions' => ['class' => 'text-center'],
+            'columns' => [
+                // ['class' => 'yii\grid\SerialColumn'],
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'rowOptions' => ['class' => 'text-center'],
-        'columns' => [
-            // ['class' => 'yii\grid\SerialColumn'],
+                // 'id_usuario',
+                'nombres',
+                'apellidos',
+                'correo',
+                // 'usuario',
+                // 'contrasena',
+                'telefono',
+                // 'sexo',
+                ['attribute' => 'sexo',
+                'value' => function($dato){ if($dato['sexo'] === 'f'){return 'Femenino';}else{return 'Masculino';}},
+                'filter' => ['m' => 'Masculino', 'f' => 'Femenino'],
+                ],
+                [
+                    'attribute' => 'estado',
+                    'value' => function($valor){
+                        switch ($valor->estado) {
+                            case '4':
+                                return 'Activo';
+                                break;
+                            case '5':
+                                return 'Inactivo';
+                                break;
+                        }
+                },
+                    'filter' => ['4' => 'Activo', '5' => 'Inactivo'],
+                ],
 
-            // 'id_usuario',
-            'nombres',
-            'apellidos',
-            'correo',
-            // 'usuario',
-            // 'contrasena',
-            'telefono',
-            // 'sexo',
-            ['attribute' => 'sexo',
-            'value' => function($dato){ if($dato['sexo'] === 'f'){return 'Femenino';}else{return 'Masculino';}},
-            'filter' => ['m' => 'Masculino', 'f' => 'Femenino'],
+                 [
+                    'class' => 'yii\grid\ActionColumn',
+                    'contentOptions' => ['hidden' => ''],
+                    'headerOptions' => ['hidden' => ''],
+                    'filterOptions' => ['hidden' => ''],
+                ],
             ],
-            [
-                'attribute' => 'estado',
-                'value' => function($valor){
-                    switch ($valor->estado) {
-                        case '4':
-                            return 'Activo';
-                            break;
-                        case '5':
-                            return 'Inactivo';
-                            break;
-                    }
-            },
-                'filter' => ['4' => 'Activo', '5' => 'Inactivo'],
-            ],
-
-             [
-                'class' => 'yii\grid\ActionColumn',
-                'contentOptions' => ['hidden' => ''],
-                'headerOptions' => ['hidden' => ''],
-                'filterOptions' => ['hidden' => ''],
-            ],
-        ],
-    ]); ?>
+        ]); ?>
+    </div>
 
 </div>

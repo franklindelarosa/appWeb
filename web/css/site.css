@@ -13,7 +13,7 @@ th{
 a.botones{
     color: inherit;
     display: block;
-    text-decoration: none;    
+    text-decoration: none;
 }
 
 ul.breadcrumb{
@@ -144,8 +144,52 @@ textarea{
     font-style: italic;
 }
 
+div.imagen-container {
+    display: block;
+}
+
+div.profile-image {
+    display: inline-block;
+    position: relative;
+}
+
+div.profile-image img {
+    border-radius: 20px;
+    height: 150px;
+    width: 150px;
+}
+div.profile-image:hover img {
+    opacity: 0.8;
+}
+
+div.profile-image a:nth-child(2){
+    position: absolute;
+    top: 5px;
+    left: 122px;
+    color: red;
+    display: none;
+}
+
+div.profile-image a:nth-child(3) {
+    position: absolute;
+    top: 5px;
+    left: 102px;
+    color: yellow;
+    display: none;
+}
+div.profile-image:hover a {
+    display: block;
+}
+
 p.btn-right{
     float: right;
+}
+
+@media only screen and (max-width: 440px) {
+    p.btn-right{
+        margin-top: 10px;
+        float: none;
+    }
 }
 
 /* add sorting icons to gridview sort links */

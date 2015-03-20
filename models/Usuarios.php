@@ -160,7 +160,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
 
     public static function findByUsername($username)
     {
-        $usuario = Usuarios::find()->where(['usuario' => $username])->one();
+        $usuario = Usuarios::find()->where(['usuario' => $username, 'estado' => Estados::USUARIO_ACTIVO])->one();
         if ($usuario !== null) {
             return new static($usuario);
         }

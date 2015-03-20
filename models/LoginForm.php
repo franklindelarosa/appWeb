@@ -56,7 +56,12 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate() && Yii::$app->authManager->checkAccess($this->getUser()->id, 'Administrador')) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            $user = Usuarios::find()->where(['usuario' => $this->username])->one();
+            // if($user->estado === Estados::USUARIO_INACTIVO){
+            //     $user->estado = Estados::USUARIO_ACTIVO;
+            //     $user->save();
+            // }
+            return Yii::$app->user->login($user, $this->rememberMe ? 3600*24*30 : 0);
         } else {
             $this->addError('password', 'No tienes permiso para ingresar.');
             return false;

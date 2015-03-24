@@ -68,8 +68,14 @@ class UsuariosController extends Controller
      */
     public function actionView($id)
     {
+        $sql = "SET lc_time_names = 'es_CO'";
+        Yii::$app->db->createCommand($sql)->execute();
+        $sql = "SELECT p.fecha, DATE_FORMAT(p.fecha, '%W %e de %M') label_fecha, p.hora, DATE_FORMAT(p.hora, '%h:%i %p') label_hora, p.estado, c.* FROM usuarios_partidos ut, partidos p, canchas c WHERE ut.id_usuario = ".
+        $id." AND ut.id_partido = p.id_partido AND p.id_cancha = c.id_cancha ORDER BY p.fecha ASC, p.hora ASC";
+        $historial = \Yii::$app->db->createCommand($sql)->queryAll();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'historial' => $historial,
         ]);
     }
 

@@ -35,10 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <p class="btn-right">
-        <?= Html::a('Actualizar', ['update', 'id' => $model->id_usuario], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Historial', null, ['title'=>'Ver historial de partidos', 'id' => 'btn_historial', 'class' => 'btn btn-warning', 'data-toggle' => 'modal', 'data-target' => '#historial-modal', 'data-backdrop' => 'static']) ?>
+        <?= Html::a('Actualizar', ['update', 'id' => $model->id_usuario], ['title'=>'Actualizar información', 'class' => 'btn btn-primary']) ?>
 
         <?php if(Yii::$app->user->id != $model->id_usuario){ ?>
             <?= Html::a('Eliminar', ['delete', 'id' => $model->id_usuario], [
+                'title'=>'Eliminar el usuario',
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => 'Está seguro que desea eliminar este usuario?',
@@ -96,6 +98,40 @@ $this->params['breadcrumbs'][] = $this->title;
                             <button id="cargar" type="submit" class="btn btn-success" name="submit">Cargar Imagen</button>
                         </div><br>
                     <?php ActiveForm::end(); ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="historial-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Historial de <?= $model->nombres.' '.$model->apellidos ?></h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered table-hover">
+                        <tr>
+                            <th>Cancha</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Estado</th>
+                        </tr>
+                        <?php if(count($historial) === 0){ ?>
+                            <tr><td colspan="4"><p class="text-center">No tiene partidos registrados</p></td></tr>
+                        <?php }else{
+                            foreach ($historial as $key => $value) { ?>
+                                <tr><td><?=$value['nombre'] ?></td>
+                                <td><?=$value['label_fecha'] ?></td>
+                                <td><?=$value['label_hora'] ?></td>
+                                <td><?=($value['estado'] === 1) ? 'Sin jugar' : 'Jugado' ?></td></tr>
+                        <?php }
+                        } ?>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>

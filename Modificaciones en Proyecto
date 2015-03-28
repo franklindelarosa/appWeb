@@ -1,5 +1,6 @@
 http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=AccesoCamaraPhoneGap
 http://plugins.cordova.io/#/package/org.apache.cordova.camera
+http://www.variablenotfound.com/2012/10/closures-en-javascript-entiendelos-de.html
 
 key hashes:
 keytool -exportcert -alias androiddebugkey -keystore %HOMEPATH%\.android\debug.keystore | openssl sha1 -binary | openssl base64

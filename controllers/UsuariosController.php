@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuarios;
+use app\models\Estados;
 use app\models\UsuariosSearch;
 use app\models\FotoPerfil;
 use yii\web\Controller;
@@ -213,28 +214,6 @@ class UsuariosController extends Controller
      */
     public function actionDelete($id)
     {
-        // Yii::$app->authManager->revokeAll($id);
-        // $this->findModel($id)->delete();
-        // $transaction = \Yii::$app->db->beginTransaction();
-        // try {
-        //     $sql = "DELETE FROM usuarios_partidos ut, partidos p WHERE ut.id_partido = p.id_partido AND ut.id_usuario = ".$id." AND p.estado = 5";
-        //     \Yii::$app->db->createCommand($sql)->execute();
-        //     $sql = "DELETE FROM invitaciones WHERE id_partido = ".$_POST['partido']." AND id_usuario = ".$_POST['jugador'];
-        //     \Yii::$app->db->createCommand($sql)->execute();
-        //     $sql = "DELETE FROM invitados WHERE id_invitado = ".$id;
-        //     \Yii::$app->db->createCommand($sql)->execute();
-        //     $transaction->commit();
-        //     $result['mensaje'] = 'ok';
-        // } catch (Exception $e) {
-        //     $result['mensaje'] = 'bad';
-        //     $transaction->rollBack();
-        // }
-        // $model = $this->findModel($id);
-        // $model->estado = 5;
-        // if($model->save(false)){
-
-        // }
-        // return $this->redirect(['index']);
         try {
             Yii::$app->authManager->revokeAll($id);
             $model = $this->findModel($id);
@@ -246,6 +225,17 @@ class UsuariosController extends Controller
         } catch (yii\db\IntegrityException $e) {
             // throw new NotFoundHttpException('');
             throw new \yii\web\HttpException(403, 'No se puede eliminar un usuario con partidos activos');
+        }
+    }
+
+    public function actionBloquear($id)
+    {
+        $model = $this->findModel($id);
+        $model->estado = Estados::USUARIO_BLOQUEADO;
+        if($model->save()){
+            return $this->redirect(['index']);
+        }else{
+            return $this->redirect(['view', 'id' => $id]);
         }
     }
 

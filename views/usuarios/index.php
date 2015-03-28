@@ -53,10 +53,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 break;
                             case '5':
                                 return 'Inactivo';
+                            case '8':
+                                return 'Bloqueado';
+                            case '9':
+                            return 'Sin verificar';
                                 break;
                         }
                 },
-                    'filter' => ['4' => 'Activo', '5' => 'Inactivo'],
+                    'filter' => ['4' => 'Activo', '5' => 'Inactivo', '8' => 'Bloqueado', '9' => 'Sin verificar'],
                 ],
 
                  [

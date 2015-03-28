@@ -1,0 +1,57 @@
+http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=AccesoCamaraPhoneGap
+http://plugins.cordova.io/#/package/org.apache.cordova.camera
+
+key hashes:
+keytool -exportcert -alias androiddebugkey -keystore %HOMEPATH%\.android\debug.keystore | openssl sha1 -binary | openssl base64
+Nq9AgagOSV8l9B/eHIptxydZDTk=
+kDwe03nu9DR1H2gvETFgo97ZPS0=
+
+cordova -d plugin add ../phonegap-facebook-plugin --variable APP_ID="433307120163808" --variable APP_NAME="FutbolCracks - Test1"
+
+iPhone/iPad store ID:960840962
+
+cordova plugin add org.apache.cordova.camera
+
+Modificaciones fcracks:
+views/site/activate.php
+views/site/passupdate.php
+views/estados/_form.php
+views/usuarios/index.php
+SiteController.php
+bower/../css/bootstrap.css
+models/Usuarios.php
+
+Modificaciones fcapi:
+SiteController.php
+api/modules/v1/views/*
+config/web.php
+models/Usuario.php
+
+
+Corrección variable KIT_KAT
+android update project -p platforms/android/
+cd platforms/android/
+ant clean
+cd FacebookLib
+ant clean
+open -e AndroidManifest.xml
+// change your minSdkVersion and your targetSdkVersion to your environment settings for me it was:
+// <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="19" />
+ant release
+cd ../../..
+cordova build android
+
+Correcciones para problemas con phonegap-facebook-plugin:
+	En el build.gradle en el contenido de "android" comenzar con:
+		compileSdkVersion 19
+		buildToolsVersion "19.1.0"
+		defaultConfig {
+			minSdkVersion 19
+			targetSdkVersion 19
+		}
+	Del build.gradle cambiar la línea:
+		classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+	Por estas dos líneas:
+		ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+    	classpath += files(ext.androidJar)
+

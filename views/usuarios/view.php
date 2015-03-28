@@ -35,10 +35,15 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <p class="btn-right">
-        <?= Html::a('Historial', null, ['title'=>'Ver historial de partidos', 'id' => 'btn_historial', 'class' => 'btn btn-warning', 'data-toggle' => 'modal', 'data-target' => '#historial-modal', 'data-backdrop' => 'static']) ?>
+        <?= Html::a('Historial', null, ['title'=>'Ver historial de partidos', 'id' => 'btn_historial', 'class' => 'btn btn-success', 'data-toggle' => 'modal', 'data-target' => '#historial-modal', 'data-backdrop' => 'static']) ?>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id_usuario], ['title'=>'Actualizar información', 'class' => 'btn btn-primary']) ?>
+        <?= Html::a('Bloquear', ['bloquear', 'id' => $model->id_usuario], ['title'=>'Bloquear a este usuario', 'class' => 'btn btn-warning',
+            'data' => [
+                'confirm' => 'Está seguro que desea bloquear este usuario?',
+                'method' => 'post',
+            ],]) ?>
 
-        <?php if(Yii::$app->user->id != $model->id_usuario){ ?>
+        <?php if(Yii::$app->user->id != $model->id_usuario && count($historial) === 0){ ?>
             <?= Html::a('Eliminar', ['delete', 'id' => $model->id_usuario], [
                 'title'=>'Eliminar el usuario',
                 'class' => 'btn btn-danger',
@@ -72,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'pierna_habil',
-                'value' => $model->pierna_habil !== NULL ? $model->pierna_habil : 'Sin definir',
+                'value' => ($model->pierna_habil !== NULL) ? $model->pierna_habil : 'Sin definir',
             ],
             [
                 'attribute' => 'estado',

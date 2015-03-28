@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
 						<select class="form-control" name="Estados[entidad]" required id="estados-entidad">
                         <option value="">Selecciona una entidad</option>
                         <option value="partidos">Partidos</option>
-                        <option value="usuarios">Jugadores</option>
+                        <option value="usuarios">Usuarios</option>
                         <option value="canchas">Canchas</option>
                     </select>
 						<p class="help-block">A qué entidad pertenecerá el estado.</p>

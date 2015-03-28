@@ -185,10 +185,17 @@ p.btn-right{
     float: right;
 }
 
-@media only screen and (max-width: 440px) {
+@media only screen and (max-width: 615px) {
     p.btn-right{
         margin-top: 10px;
         float: none;
+    }
+}
+
+@media only screen and (max-width: 456px) {
+    p.btn-right a:last-child {
+        text-align: center;
+        margin-top: 10px;
     }
 }
 
